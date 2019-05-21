@@ -1,6 +1,6 @@
 package UI;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -48,6 +48,9 @@ public class LoginController implements Initializable {
                 //id checking function call.
                 if(idCheckYoutube(login)) {
                     //login success. close the login window and show youtube window.
+
+                    executeGetAuthPythonScript();
+
                     oldStage.close();
                     youtubeLoginWindow();
                 }
@@ -80,6 +83,29 @@ public class LoginController implements Initializable {
         if(login.equals("youtube")) return true;
         else return false;
     }
+
+    private void executeGetAuthPythonScript(){
+        String command = "python3 ./java_get_auth_key1.py";
+        try {
+            System.out.println(command);
+            Process p = Runtime.getRuntime().exec(command);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    //Pass Login URL to python Script
+    public String loginIdReturnYoutube(String loginBroadcastID){
+        try{
+            return loginBroadcastID;
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return loginBroadcastID;
+    }
+
     // show youtube login window.
     private void youtubeLoginWindow() {
         try {
