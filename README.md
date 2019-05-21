@@ -29,3 +29,7 @@
 
 # DDokDDok Youtube Live Streaming Python Module Repository.
 [DDokDDok Livestreaming Python Module](https://github.com/cauchatbot/Youtube)
+
+## 이 Release Version은 Windows 용입니다.
+ * Youtube 기능을 사용하실때에는, 위에 게시된 DDokDDok Python Module의 README를 반드시 읽어주셔야 동작합니다.
+ * 봇을 사용하기 전, `.../src/main/java/UI`에 위치한 `java_get_auth_key1.py`와 `bot.py`의 `FILE_PATH`를 반드시 변경하여주십시오.
