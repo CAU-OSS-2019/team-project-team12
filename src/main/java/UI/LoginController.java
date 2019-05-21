@@ -1,6 +1,7 @@
 package UI;
 
-import java.io.IOException;
+import java.io.File;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -46,8 +47,20 @@ public class LoginController implements Initializable {
             //for youtube platform.
             case "youtubeButton":
                 //id checking function call.
-                if(idCheckYoutube(login)) {
+                if(login.length() >= 8) {
                     //login success. close the login window and show youtube window.
+                    try {
+                        OutputStream output = new FileOutputStream("broadcastid");
+                        try{
+                            output.write(login.getBytes());
+                        }catch (IOException ex){
+                            ex.printStackTrace();
+                        }
+                    }catch (FileNotFoundException e){
+                        e.printStackTrace();
+                    }
+                    executeGetAuthPythonScript();
+
                     oldStage.close();
                     youtubeLoginWindow();
                 }
@@ -80,6 +93,30 @@ public class LoginController implements Initializable {
         if(login.equals("youtube")) return true;
         else return false;
     }
+
+    private void executeGetAuthPythonScript(){
+        File sourceCode = new File("src/main/java/UI/java_get_auth_key1.py");
+        String command = "cmd.exe /c python "+sourceCode.getAbsolutePath();
+        System.out.println(command);
+        try {
+            Process p = Runtime.getRuntime().exec(command);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+
+    //Pass Login URL to python Script
+    public String loginIdReturnYoutube(String loginBroadcastID){
+        try{
+            return loginBroadcastID;
+        }
+        catch (NullPointerException e){
+            e.printStackTrace();
+        }
+        return loginBroadcastID;
+    }
+
     // show youtube login window.
     private void youtubeLoginWindow() {
         try {
