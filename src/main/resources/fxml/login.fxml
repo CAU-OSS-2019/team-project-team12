@@ -18,7 +18,7 @@
       <Button fx:id="twitchButton" layoutX="400.0" layoutY="337.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="107.0" text="TWITCH" />
       <ImageView fitHeight="274.0" fitWidth="265.0" layoutX="188.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@ddokddok.png" />
+            <Image url="@/images/ddokddok.png" />
          </image>
       </ImageView>
       <TextField fx:id="loginID" layoutX="242.0" layoutY="287.0" prefHeight="31.0" prefWidth="265.0" />

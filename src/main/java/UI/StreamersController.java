@@ -37,7 +37,7 @@ public class StreamersController implements Initializable {
 
     private void inputFailWindow(String whatOperation) {
         try {
-            Pane newPane = FXMLLoader.load(getClass().getResource("inputFail.fxml"));
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputFail.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
             newStage.setScene(newScene);
@@ -51,7 +51,7 @@ public class StreamersController implements Initializable {
     }
     private void inputSuccessWindow(String whatOperation) {
         try {
-            Pane newPane = FXMLLoader.load(getClass().getResource("inputSuccess.fxml"));
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputSuccess.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
             newStage.setScene(newScene);

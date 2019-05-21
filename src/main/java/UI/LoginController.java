@@ -120,7 +120,7 @@ public class LoginController implements Initializable {
     // show youtube login window.
     private void youtubeLoginWindow() {
         try {
-            Pane newPane = FXMLLoader.load(getClass().getResource("youtubeLogin.fxml"));
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/youtubeLogin.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
             newStage.setScene(newScene);
@@ -136,7 +136,7 @@ public class LoginController implements Initializable {
     // show twitch window.
     private void twitchWindow() {
         try {
-            Pane newPane = FXMLLoader.load(getClass().getResource("twitch.fxml"));
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/twitch.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
             newStage.setScene(newScene);
@@ -151,7 +151,7 @@ public class LoginController implements Initializable {
     // show fail notice window.
     private void failWindow() {
         try {
-            Pane newPane = FXMLLoader.load(getClass().getResource("loginFail.fxml"));
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/loginFail.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
             newStage.setScene(newScene);

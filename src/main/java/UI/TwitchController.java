@@ -72,8 +72,9 @@ public class TwitchController implements Initializable {
     // show keywords window.
     public void keywordsWindow(){
         try {
-            Desktop.getDesktop().edit(new File("C:\\Users\\김영현\\IdeaProjects\\UI02\\src\\main\\java\\UI\\keywords.txt"));
-            Pane newPane = FXMLLoader.load(getClass().getResource("keywords.fxml"));
+        	URL url = getClass().getResource("/txt/keywords.txt");
+            Desktop.getDesktop().edit(new File(url.getPath()));
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/keywords.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
             newStage.setScene(newScene);
@@ -88,8 +89,9 @@ public class TwitchController implements Initializable {
     // show urls window.
     public void urlsWindow(){
         try {
-            Desktop.getDesktop().edit(new File("C:\\Users\\김영현\\IdeaProjects\\UI02\\src\\main\\java\\UI\\urls.txt"));
-            Pane newPane = FXMLLoader.load(getClass().getResource("urls.fxml"));
+        	URL url = getClass().getResource("/txt/urls.txt");
+            Desktop.getDesktop().edit(new File(url.getPath()));
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/urls.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
             newStage.setScene(newScene);
@@ -104,8 +106,9 @@ public class TwitchController implements Initializable {
     //show streamers window.
     public void streamersWindow(){
         try {
-            Desktop.getDesktop().edit(new File("C:\\Users\\김영현\\IdeaProjects\\UI02\\src\\main\\java\\UI\\streamers.txt"));
-            Pane newPane = FXMLLoader.load(getClass().getResource("streamers.fxml"));
+        	URL url = getClass().getResource("/txt/streamers.txt");
+            Desktop.getDesktop().edit(new File(url.getPath()));
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/streamers.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
             newStage.setScene(newScene);
@@ -120,7 +123,7 @@ public class TwitchController implements Initializable {
     public void banUser(tempDSProperty selected) {
         if(true) {
             try {
-                Pane newPane = FXMLLoader.load(getClass().getResource("inputSuccess.fxml"));
+                Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputSuccess.fxml"));
                 Scene newScene = new Scene(newPane);
                 Stage newStage = new Stage();
                 newStage.setScene(newScene);
@@ -134,7 +137,7 @@ public class TwitchController implements Initializable {
         }
         else {
             try {
-                Pane newPane = FXMLLoader.load(getClass().getResource("inputFail.fxml"));
+                Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputFail.fxml"));
                 Scene newScene = new Scene(newPane);
                 Stage newStage = new Stage();
                 newStage.setScene(newScene);

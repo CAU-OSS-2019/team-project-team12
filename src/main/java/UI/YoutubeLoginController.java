@@ -46,7 +46,7 @@ public class YoutubeLoginController implements Initializable {
 
             try {
                 oldStage.close();
-                Pane newPane = FXMLLoader.load(getClass().getResource("youtube.fxml"));
+                Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/youtube.fxml"));
                 Scene newScene = new Scene(newPane);
                 Stage newStage = new Stage();
                 newStage.setScene(newScene);
@@ -60,7 +60,7 @@ public class YoutubeLoginController implements Initializable {
         else
         {
             try {
-                Pane newPane = FXMLLoader.load(getClass().getResource("loginFail.fxml"));
+                Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/loginFail.fxml"));
                 Scene newScene = new Scene(newPane);
                 Stage newStage = new Stage();
                 newStage.setScene(newScene);

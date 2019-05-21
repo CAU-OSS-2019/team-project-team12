@@ -28,12 +28,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <filtering>false</filtering>
-                <directory>src/main/java</directory>
-            </resource>
-        </resources>
     </build>
     <dependencies>
         <dependency>
@@ -41,6 +35,17 @@
             <artifactId>javafx-fxml</artifactId>
             <version>11.0.1</version>
         </dependency>
+	    <!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+	    	<groupId>org.json</groupId>
+	    	<artifactId>json</artifactId>
+	    	<version>20180813</version>
+		</dependency>
+		<dependency>
+	    	<groupId>org.kitteh.irc</groupId>
+	    	<artifactId>client-lib</artifactId>
+	    	<version>7.1.0</version>
+		</dependency>
     </dependencies>
 
 </project>
