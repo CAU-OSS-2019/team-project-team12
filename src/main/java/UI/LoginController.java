@@ -15,13 +15,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class LoginController implements Initializable {
     //initialize Buttons, TextField in login.fxml
     @FXML private Button youtubeButton;
     @FXML private Button twitchButton;
     @FXML private TextField loginID;
-
+    
+    String login;
+    
     //Initialize implementation for superclass.
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -41,7 +44,7 @@ public class LoginController implements Initializable {
         Button tmpButton = (Button) event.getSource();//"youtubeButton" or "twitchButton".
         Stage oldStage = (Stage) tmpButton.getScene().getWindow();//login window.
 
-        String login = loginID.getText();
+        login = loginID.getText();
         //platform button input checking
         switch (tmpButton.getId()) {
             //for youtube platform.
@@ -71,16 +74,8 @@ public class LoginController implements Initializable {
                 break;
             //for twitch platform.
             case "twitchButton":
-                //id checking function call.
-                if(idCheckTwitch(login)) {
-                    //login success. close the login window and show twitch window.
-                    oldStage.close();
-                    twitchWindow();
-                }
-                else {
-                    //login fail. show fail notice window.
-                    failWindow();
-                }
+            	oldStage.close();
+                twitchWindow();
                 break;
         }
     }
@@ -136,11 +131,13 @@ public class LoginController implements Initializable {
     // show twitch window.
     private void twitchWindow() {
         try {
-            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/twitch.fxml"));
-            Scene newScene = new Scene(newPane);
+        	FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/twitch.fxml"));
             Stage newStage = new Stage();
-            newStage.setScene(newScene);
-            newStage.setTitle("DDOKDDOK Chatbot for Twitch");
+            newStage.setScene(new Scene((Pane) loader.load()));
+            newStage.setTitle("DDOKDDOK Chatbot for Twitch /" + login);
+            TwitchController twitchController = loader.<TwitchController>getController();
+            twitchController.setUserName(login);
+            
             newStage.show();
         }
         catch (IOException ex) {

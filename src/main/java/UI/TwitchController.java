@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import twitch.DDokDDokTwitch;
 
 public class TwitchController implements Initializable {
     //3Buttons, TableView initialize.
@@ -41,9 +42,9 @@ public class TwitchController implements Initializable {
 
     //temp initialize for show test
     tempDS seongmin = new tempDS("shieldnet", "ATEZ", "시발");
-
-
-
+    
+    DDokDDokTwitch ddokddok;
+    String UserName;
 
     //initialize table contents, button actions.
     @Override
@@ -67,6 +68,13 @@ public class TwitchController implements Initializable {
             tempDSProperty selected = twitchTable.getSelectionModel().getSelectedItem();
             banUser(selected);
         });
+    }
+    public void setUserName(String UserName) {
+    	this.UserName = UserName;
+    	ddokddok = new DDokDDokTwitch(UserName);
+    	if (!ddokddok.connect()) {
+    		failWindow();
+    	}
     }
 
     // show keywords window.
@@ -157,5 +165,20 @@ public class TwitchController implements Initializable {
         }
         else
             return new SimpleStringProperty("아무튼 이상함");
+    }
+    
+    // show fail notice window.
+    private void failWindow() {
+        try {
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/loginFail.fxml"));
+            Scene newScene = new Scene(newPane);
+            Stage newStage = new Stage();
+            newStage.setScene(newScene);
+            newStage.setTitle("Login Failed.");
+            newStage.show();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }
