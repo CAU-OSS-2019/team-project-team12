@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="167.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.LoginFailController">
+   <children>
+      <Label layoutX="19.0" layoutY="26.0" prefHeight="45.0" prefWidth="361.0" text="로그인 ID가 올바르지 않습니다.">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+      <Button fx:id="closeButton" layoutX="144.0" layoutY="110.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="110.0" text="닫기" />
+      <Label layoutX="19.0" layoutY="61.0" prefHeight="45.0" prefWidth="361.0" text="플랫폼과 ID를 다시 확인해주세요.">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

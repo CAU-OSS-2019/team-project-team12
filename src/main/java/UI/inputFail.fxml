@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="134.0" prefWidth="381.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.InputFailController">
+   <children>
+      <Button fx:id="ok" layoutX="142.0" layoutY="70.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="97.0" text="확인" />
+      <Label layoutX="68.0" layoutY="31.0" prefHeight="39.0" prefWidth="246.0" text="올바르지 않은 입력입니다. 다시 시도하세요." />
+   </children>
+</AnchorPane>
