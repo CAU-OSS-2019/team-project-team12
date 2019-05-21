@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -26,6 +27,23 @@ public class YoutubeLoginController implements Initializable {
         if(login)
         {
             Stage oldStage = (Stage) accept.getScene().getWindow();
+            String API_KEY = loginAPI.getText();
+
+            //Save API_KEY input from user to "authcode" file.
+            try {
+                OutputStream output = new FileOutputStream("authcode");
+                try{
+                    output.write(API_KEY.getBytes());
+                }catch (IOException ex){
+                    ex.printStackTrace();
+                }
+            }catch (FileNotFoundException e){
+                e.printStackTrace();
+            }
+
+            //GetKey
+            System.out.print(API_KEY);
+
             try {
                 oldStage.close();
                 Pane newPane = FXMLLoader.load(getClass().getResource("youtube.fxml"));

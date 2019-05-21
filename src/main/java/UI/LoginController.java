@@ -1,5 +1,6 @@
 package UI;
 
+import java.io.File;
 import java.io.*;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,9 +47,18 @@ public class LoginController implements Initializable {
             //for youtube platform.
             case "youtubeButton":
                 //id checking function call.
-                if(idCheckYoutube(login)) {
+                if(login.length() >= 8) {
                     //login success. close the login window and show youtube window.
-
+                    try {
+                        OutputStream output = new FileOutputStream("broadcastid");
+                        try{
+                            output.write(login.getBytes());
+                        }catch (IOException ex){
+                            ex.printStackTrace();
+                        }
+                    }catch (FileNotFoundException e){
+                        e.printStackTrace();
+                    }
                     executeGetAuthPythonScript();
 
                     oldStage.close();
@@ -85,9 +95,10 @@ public class LoginController implements Initializable {
     }
 
     private void executeGetAuthPythonScript(){
-        String command = "python3 ./java_get_auth_key1.py";
+        File sourceCode = new File("src/main/java/UI/java_get_auth_key1.py");
+        String command = "cmd.exe /c python "+sourceCode.getAbsolutePath();
+        System.out.println(command);
         try {
-            System.out.println(command);
             Process p = Runtime.getRuntime().exec(command);
         }catch (IOException e){
             e.printStackTrace();

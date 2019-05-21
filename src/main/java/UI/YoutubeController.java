@@ -73,6 +73,20 @@ public class YoutubeController implements Initializable {
             banUser(selected);
         });
 
+
+        //Execute Python bot.py
+        executeBotPythonScript();
+    }
+
+    private void executeBotPythonScript(){
+        File sourceCode = new File("src/main/java/UI/bot.py");
+        String command = "cmd.exe /c python "+sourceCode.getAbsolutePath();
+        System.out.println(command);
+        try {
+            Process p = Runtime.getRuntime().exec(command);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 
     /*
