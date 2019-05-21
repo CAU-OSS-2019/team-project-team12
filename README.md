@@ -26,5 +26,3 @@
 * TwitchController.java와 YoutubeController.java의 
 *Desktop.getDesktop().edit(new File("AbsolutePath"));*
 으로 구현된 필터링 할 욕설과 채팅 허용 url링크, 입장 안내를 받을 스트리머 각각의 목록을 저장하고있는 .txt파일을 여는 부분에서, "AbsolutePath"부분을 RelativePath로 대체하는 방법을 아직 찾지 못했습니다. 실행하시기  Repository에 포함되어있는 keywords.txt, urls.txt, streamers.txt파일의 절대경로를 수정해주셔야합니다.
-
- 
