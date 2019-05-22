@@ -23,6 +23,7 @@ public class StreamersController implements Initializable {
     @FXML private Button add;
     @FXML private Button delete;
     @FXML private ListView<String> streamersList;
+    DataTable dataTable;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,14 +40,18 @@ public class StreamersController implements Initializable {
     }
 
     private void addStreamer(boolean isExist) {
-        if(isExist) inputFailWindow("Add Streamer failed");
-        else inputSuccessWindow("Add Streamer succeed");
-
+    	if (dataTable.AddToNamedList(inputString.getText())) {
+    		inputSuccessWindow("delete URL succeed");
+    	} else {
+    		inputFailWindow("Delete URL failed");
+    	}
     }
     private void deleteStreamer(boolean isExist) {
-        if(isExist) inputSuccessWindow("delete Streamer succeed");
-        else inputFailWindow("Delete Streamer failed");
-
+    	if (dataTable.DeleteFromNamedList(inputString.getText())) {
+    		inputSuccessWindow("delete URL succeed");
+    	} else {
+    		inputFailWindow("Delete URL failed");
+    	}
     }
 
     private void inputFailWindow(String whatOperation) {

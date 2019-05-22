@@ -37,11 +37,6 @@ public class DDokDDokTwitch {
         public void onMsgFired(ChannelMessageEvent event) {
         	ChatData newChat = new ChatData(event.getActor().getNick(), 
         			event.getActor().getHost(), event.getMessage());
-        	System.out.println(event.getActor().getNick());
-        	System.out.println(event.getActor().getUserString());
-        	System.out.println(event.getActor().getName());
-        	System.out.println(event.getActor().getAccount().toString());
-        	System.out.println(event.getActor().toString());
         	chatProc.doProc(newChat);
         	if (newChat.getIsBadword()) {
         		chatDataProperty.add(new ChatDataProperty(newChat));

@@ -38,14 +38,20 @@ public class UrlsController implements Initializable {
     }
 
     private void addUrls (){
-    	
-        
+    	if (dataTable.AddToURLList(inputString.getText())) {
+    		inputSuccessWindow("delete URL succeed");
+    	} else {
+    		inputFailWindow("Delete URL failed");
+    	}
+     
 
     }
     private void deleteUrls ( boolean isExist){
-        if (isExist) inputSuccessWindow("delete URL succeed");
-        else inputFailWindow("Delete URL failed");
-
+    	if (dataTable.DeleteFromURLList(inputString.getText())) {
+    		inputSuccessWindow("delete URL succeed");
+    	} else {
+    		inputFailWindow("Delete URL failed");
+    	}
     }
 
     private void inputFailWindow (String whatOperation){
