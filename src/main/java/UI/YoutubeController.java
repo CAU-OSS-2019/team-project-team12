@@ -5,18 +5,23 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.ArrayList;
 
 //Seongmin Java Scheduler
 import java.util.Timer;
 import java.util.TimerTask;
 
 //Seongmin JSON Parser
+import chatcontrol.ChatProc;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import chatcontrol.ChatData;
+import chatcontrol.ChatProc;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -79,6 +84,12 @@ class ScheduledJob extends TimerTask{
 }
 
 class JsonParsingSchedule extends TimerTask{
+    JSONObject jsn;
+    ArrayList<ChatData> ch;
+    JsonParsingSchedule(JSONObject j, ArrayList<ChatData> ch){
+        this.jsn =j;
+        this.ch = ch;
+    }
     public void run() {
 
     }
@@ -108,6 +119,9 @@ public class YoutubeController implements Initializable {
     //initialize table contents, button actions.
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ChatProc proc =new ChatProc();
+        ArrayList<ChatData> localChatdataArrayList = new ArrayList<ChatData>();
+        JSONObject localJsonObj = new JSONObject();
 
         ObservableList<ChatDataProperty> myList = FXCollections.observableArrayList(
 
@@ -134,9 +148,9 @@ public class YoutubeController implements Initializable {
         //After 5000ms pass, run jsonparser
         jobScheduler.scheduleAtFixedRate(job, 1000, 5000);
 
-        JsonParsingSchedule parseAndAddJob = new JsonParsingSchedule();
+        JsonParsingSchedule parseAndAddJob = new JsonParsingSchedule(localJsonObj, localChatdataArrayList);
         Timer parseAndAddScheduler = new Timer();
-        //After 5000ms pass, run
+        //After 6000ms pass, run
         parseAndAddScheduler.scheduleAtFixedRate(parseAndAddJob,1000,6000);
 
         //Execute Python bot.py
