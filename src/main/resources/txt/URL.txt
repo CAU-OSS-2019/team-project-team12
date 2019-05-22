@@ -1,0 +1,10 @@
+safety URL lists
+www.naver.com
+www.daum.net
+http://www.daum.net
+daum.net
+
+
+www.naver.com
+http://www.naver.com
+naver.com

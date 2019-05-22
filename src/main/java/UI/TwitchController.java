@@ -24,48 +24,29 @@ import twitch.DDokDDokTwitch;
 public class TwitchController implements Initializable {
     //3Buttons, TableView initialize.
     @FXML
-    private Button keywords;
+    private Button keywords, urls, streamers;
     @FXML
-    private Button urls;
+    private TableView<ChatDataProperty> twitchTable;
     @FXML
-    private Button streamers;
-    @FXML
-    private TableView<tempDSProperty> twitchTable;
-    @FXML
-    private TableColumn<tempDSProperty, String> userID;
-    @FXML
-    private TableColumn<tempDSProperty, String> nickName;
-    @FXML
-    private TableColumn<tempDSProperty, String> chat;
-    @FXML
-    private TableColumn<tempDSProperty, String> status;
-
-    //temp initialize for show test
-    tempDS seongmin = new tempDS("shieldnet", "ATEZ", "시발");
+    private TableColumn<ChatDataProperty, String> userID, nickName, chat, status;
     
-    DDokDDokTwitch ddokddok;
-    String UserName;
-
+    private DDokDDokTwitch ddokddok;
+    private String UserName;
+    
     //initialize table contents, button actions.
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        seongmin.setIsBadword(true);
-        ObservableList<tempDSProperty> myList = FXCollections.observableArrayList(
-            new tempDSProperty("kwxyk", "Reichidad", "기모띠", false, true ),
-            new tempDSProperty(seongmin)
-        );
         userID.setCellValueFactory(cellData -> cellData.getValue().getUserID());
         nickName.setCellValueFactory(cellData -> cellData.getValue().getUserNickName());
         chat.setCellValueFactory(cellData -> cellData.getValue().getChatText());
         status.setCellValueFactory(cellData -> setStatus(cellData.getValue().getIsBadword(), cellData.getValue().getIsNamed()));
-        twitchTable.setItems(myList);
 
         //call each corresponding window that will be shown for clicking button
         keywords.setOnAction(event -> keywordsWindow());
         urls.setOnAction(event -> urlsWindow());
         streamers.setOnAction(event->streamersWindow());
         twitchTable.setOnMouseClicked(event -> {
-            tempDSProperty selected = twitchTable.getSelectionModel().getSelectedItem();
+            ChatDataProperty selected = twitchTable.getSelectionModel().getSelectedItem();
             banUser(selected);
         });
     }
@@ -75,6 +56,7 @@ public class TwitchController implements Initializable {
     	if (!ddokddok.connect()) {
     		failWindow();
     	}
+    	twitchTable.setItems(ddokddok.getChatDataObservableList());
     }
 
     // show keywords window.
@@ -128,33 +110,21 @@ public class TwitchController implements Initializable {
         }
     }
 
-    public void banUser(tempDSProperty selected) {
-        if(true) {
-            try {
-                Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputSuccess.fxml"));
-                Scene newScene = new Scene(newPane);
-                Stage newStage = new Stage();
-                newStage.setScene(newScene);
-                newStage.setTitle(selected.getUserNickName().getValue() + " was banned");
-                newStage.show();
-                twitchTable.getSelectionModel().clearSelection();
-                twitchTable.getItems().remove(selected);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        else {
-            try {
-                Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputFail.fxml"));
-                Scene newScene = new Scene(newPane);
-                Stage newStage = new Stage();
-                newStage.setScene(newScene);
-                newStage.setTitle("Ban " + selected.getUserNickName().getValue() + " failed");
-                newStage.show();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+    public void banUser(ChatDataProperty selected) {
+    	ddokddok.banUser(selected.getUserNickName().getValue());
+    	try {
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputSuccess.fxml"));
+            Scene newScene = new Scene(newPane);
+            Stage newStage = new Stage();
+            newStage.setScene(newScene);
+            newStage.setTitle(selected.getUserNickName().getValue() + " was banned");
+            newStage.show();
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+
+        twitchTable.getSelectionModel().clearSelection();
+        twitchTable.getItems().remove(selected);
     }
     public StringProperty setStatus(BooleanProperty isBadword, BooleanProperty isNamed) {
         if(isBadword.getValue() == true) {

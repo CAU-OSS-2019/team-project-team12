@@ -12,52 +12,40 @@ import org.kitteh.irc.client.library.event.channel.ChannelJoinEvent;
 import org.kitteh.irc.client.library.event.channel.ChannelMessageEvent;
 import org.kitteh.irc.client.library.feature.twitch.TwitchSupport;
 
+import UI.ChatDataProperty;
+import chatcontrol.ChatData;
+import chatcontrol.ChatProc;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import net.engio.mbassy.listener.Handler;
 public class DDokDDokTwitch {
-	public static final String BOTNAME = "ddok_ddok";
-	public static String CHANNEL;
-	public static ArrayList<String> userLogged;
-	public static int test = 0;
+	private static final String BOTNAME = "ddok_ddok";
+	private static String CHANNEL;
+	private static ChatProc chatProc;
+	private static Client client;
+	
+	private static ObservableList<ChatDataProperty> chatDataProperty;
 	
 	public static class Listener {
         @Handler
         public void onUserJoinChannel(ChannelJoinEvent event) {
-        	String msgUser = event.getUser().getNick();
-        	if (!userLogged.contains(msgUser)) {
-        		event.getChannel().sendMessage("안녕하세요  " + msgUser);
-        		userLogged.add(msgUser);
-        	}
+        	chatProc.checkUser(event.getActor().getHost());
         }
         @Handler
         public void onMsgFired(ChannelMessageEvent event) {
-        	String msgUser = event.getActor().getNick();
-        	// Part 1 : Msg Chk
-        	String msg = event.getMessage();
-        	System.out.println(msg);
-
-        	test++;
-        	if (test == 5) {
-        		banUser(event);
+        	ChatData newChat = new ChatData(event.getActor().getNick(), 
+        			event.getActor().getHost(), event.getMessage());
+        	chatProc.doProc(newChat);
+        	if (newChat.getIsBadword()) {
+        		chatDataProperty.add(new ChatDataProperty(newChat));
         	}
-        	//System.out.println(event.getActor().getHost());
-        
-        	// Part 2 : Username Chk
-        	if (!userLogged.contains(msgUser)) {
-        		event.sendReply("안녕" + msgUser);
-        		userLogged.add(msgUser);
-        	}        	
-        }
-        private void banUser(ChannelMessageEvent event) {
-        	String msgUser = event.getActor().getNick();
-        	event.sendReply("/ban " + msgUser);
         }
     }
 
 	public DDokDDokTwitch(String UserName) {
 		CHANNEL = "#" + UserName;
-		userLogged = new ArrayList<>();
-		userLogged.add(BOTNAME);
-		userLogged.add(UserName);
+		chatProc = new ChatProc();
+		chatDataProperty = FXCollections.observableArrayList();
 	}
 	
 	public boolean connect() {
@@ -65,7 +53,7 @@ public class DDokDDokTwitch {
 			String OAUTH = "oauth:alvosp0wkfaods316j6tbhpbwstr5j";
 			if (OAUTH == null)
 				return false;
-	        Client client = Client.builder()
+	        client = Client.builder()
 	                .server().host("irc.chat.twitch.tv").port(443)
 	                .password(OAUTH).then()
 	                .realName(BOTNAME)
@@ -73,13 +61,19 @@ public class DDokDDokTwitch {
 	        TwitchSupport.addSupport(client);
 	        client.connect();
 	        client.getEventManager().registerEventListener(new Listener());
-	        client.addChannel(CHANNEL);			
+	        client.addChannel(CHANNEL);
 		} catch (Exception e) {
 			return false;
 		}
 		return true;
 	}
-	
+	public void banUser(String UserName) {
+		String banMsg = "/ban " + UserName;
+		client.sendMessage(CHANNEL, banMsg);
+	}
+	public ObservableList<ChatDataProperty> getChatDataObservableList() {
+		return chatDataProperty;
+	}
 	// ToDo : Must be Fixed
 	public String oauthString() {
 		String ret;
