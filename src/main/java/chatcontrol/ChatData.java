@@ -9,6 +9,12 @@ public class ChatData {
 	private boolean isBadword;
 	private boolean isNamed;
 	private boolean havetoDisplay_Named;
+
+	//For Youtube
+	private String channelID;
+	private String youtubeLiveChatID;
+
+
 	public ChatData(String userID, String userNickName, String chatText)
 	{
 		this.userID = userID;
@@ -25,6 +31,17 @@ public class ChatData {
 		this.isBadword = chatDataProperty.getIsBadword().getValue();
 		this.isNamed = chatDataProperty.getIsNamed().getValue();
 		this.havetoDisplay_Named = false;
+	}
+	public ChatData(String userID, String userNickName, String chatText,String channelID, String youtubeLiveChatID)
+	{
+		this.userID = userID;
+		this.userNickName = userNickName;
+		this.chatText = chatText;
+		this.isBadword = false;
+		this.isNamed = false;
+		this.havetoDisplay_Named = false;
+		this.channelID = channelID;
+		this.youtubeLiveChatID = youtubeLiveChatID;
 	}
 	
 	public String getChatText()

@@ -7,15 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.ArrayList;
+import java.util.*;
 
 //Seongmin Java Scheduler
-import java.util.Timer;
-import java.util.TimerTask;
 
 //Seongmin JSON Parser
 import chatcontrol.ChatProc;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -86,11 +85,30 @@ class ScheduledJob extends TimerTask{
 class JsonParsingSchedule extends TimerTask{
     JSONObject jsn;
     ArrayList<ChatData> ch;
+
     JsonParsingSchedule(JSONObject j, ArrayList<ChatData> ch){
-        this.jsn =j;
+        this.jsn =(JSONObject) j;
         this.ch = ch;
     }
+
     public void run() {
+        //유저아이디, 닉네임, 챗 텍스트, 채널아이디, 라이브챗아이디
+        if(jsn==null){return;}
+        JSONArray items = (JSONArray) jsn.get("items");
+
+        for(int i = 0; i< items.size(); i++){
+            JSONObject res = (JSONObject) items.get(i);
+            JSONObject authorDetails = (JSONObject) res.get("authorDetails");
+            JSONObject snippet = (JSONObject) res.get("snippet");
+            String liveChatID = (String) snippet.get("liveChatId");
+            String message= (String) snippet.get("displayMessage");
+            String userNick = (String) authorDetails.get("displayName");
+            String channelID = (String) authorDetails.get("channelId");
+            String authorChannelId = (String) snippet.get("authorChannelId");
+
+            ChatData tmp = new ChatData(authorChannelId,userNick,message,channelID,liveChatID);
+            ch.add(tmp);
+        }
 
     }
 
@@ -121,7 +139,7 @@ public class YoutubeController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         ChatProc proc =new ChatProc();
         ArrayList<ChatData> localChatdataArrayList = new ArrayList<ChatData>();
-        JSONObject localJsonObj = new JSONObject();
+        JSONObject localJsonObj = readJson();
 
         ObservableList<ChatDataProperty> myList = FXCollections.observableArrayList(
 
@@ -152,15 +170,68 @@ public class YoutubeController implements Initializable {
         Timer parseAndAddScheduler = new Timer();
         //After 6000ms pass, run
         parseAndAddScheduler.scheduleAtFixedRate(parseAndAddJob,1000,6000);
+        ArrayList<ChatDataProperty> updateChatProp = makeChatData(localJsonObj);
 
+        for(int i =0;i<updateChatProp.size();i++){
+            myList.add(updateChatProp.get(i));
+        }
         //Execute Python bot.py
         executeBotPythonScript();
     }
+    private ArrayList<ChatDataProperty> makeChatData(JSONObject jsn) {
+        ChatProc chatProc = new ChatProc();
+        //유저아이디, 닉네임, 챗 텍스트, 채널아이디, 라이브챗아이디
+        ArrayList<ChatData> ch = new ArrayList<ChatData>();
+        ArrayList<ChatDataProperty> chatprop = new ArrayList<ChatDataProperty>();
+        if (jsn == null) {
+            return null;
+        }
+        JSONArray items = (JSONArray) jsn.get("items");
 
-    private void jsonRead(JSONObject jsnfile){
+        for (int i = 0; i < items.size(); i++) {
+            JSONObject res = (JSONObject) items.get(i);
+            JSONObject authorDetails = (JSONObject) res.get("authorDetails");
+            JSONObject snippet = (JSONObject) res.get("snippet");
+            String liveChatID = (String) snippet.get("liveChatId");
+            String message = (String) snippet.get("displayMessage");
+            String userNick = (String) authorDetails.get("displayName");
+            String channelID = (String) authorDetails.get("channelId");
+            String authorChannelId = (String) snippet.get("authorChannelId");
 
+            ChatData tmp = new ChatData(authorChannelId, userNick, message, channelID, liveChatID);
+            ch.add(tmp);
+        }
+        for(int i=0;i<ch.size();i++){
+            chatProc.doProc(ch.get(i));
+            chatprop.add(new ChatDataProperty(ch.get(i)));
+        }
+        return chatprop;
     }
-
+    private JSONObject readJson(){
+        JSONObject retjsn = new JSONObject();
+        String jsn = "";
+        try {
+            File chatjsonfile = new File("chatdata.json");
+            FileReader file_reader = new FileReader(chatjsonfile);
+            int cur = 0;
+            while((cur = file_reader.read())!=-1) {
+                jsn = jsn + (char)cur;
+            }
+            file_reader.close();
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject object = (JSONObject) parser.parse(jsn);
+            retjsn = object;
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+        return retjsn;
+    }
     private void executeBotPythonScript(){
         File sourceCode = new File("src/main/java/UI/bot.py");
         String command = "cmd.exe /c python "+sourceCode.getAbsolutePath();
