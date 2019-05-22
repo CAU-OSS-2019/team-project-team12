@@ -1,4 +1,4 @@
-# DDOKDDOK
+# DDOKDDOK [![Build Status](https://travis-ci.org/CAU-OSS-2019/team-project-team12.svg?branch=master)](https://travis-ci.org/CAU-OSS-2019/team-project-team12)
 ## DDOKDDOK Chatbot
  * DDOKDDOK Team의 UI 디자인 및 UI Controller 개발을 위한 Repository입니다.
 
@@ -30,9 +30,6 @@
 # Installation
 * [Maven을 윈도우 10에 설치하기](https://printhelloworld.tistory.com/113)
 * [Eclipse에서 JavaFX 컴파일하기](https://www.eclipse.org/efxclipse/references.html)
-
-# Travis CI
-* [![Build Status](https://travis-ci.org/CAU-OSS-2019/team-project-team12.svg?branch=master)](https://travis-ci.org/CAU-OSS-2019/team-project-team12)
 
 # DDokDDok Youtube Live Streaming Python Module Repository.
 * [DDokDDok Livestreaming Python Module](https://github.com/cauchatbot/Youtube)
