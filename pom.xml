@@ -8,6 +8,11 @@
     <artifactId>UI02</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+	<properties>
+		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+	</properties>
+    
     <build>
         <plugins>
             <plugin>
