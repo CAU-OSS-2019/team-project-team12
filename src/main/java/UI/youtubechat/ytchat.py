@@ -160,6 +160,9 @@ class LiveChatMessage(object):
             return self.display_message
         else:
             return self.display_message.encode("UTF-8")
+    
+    def printjson():
+        print(self.json)
 
 
 class LiveChatModerator(object):
@@ -340,13 +343,13 @@ class LiveChatApi(object):
         self.logger = logging.getLogger("liveChat_api")
 
     def get_all_messages(self, livechatId):
-        data = self.LiveChatMessages_list(livechatId, maxResults=2000)
+        data = self.live_chat_messages_list(livechatId, maxResults=2000)
         total_items = data['pageInfo']['totalResults']
         pageToken = data['nextPageToken']
         if len(data['items']) < total_items:
             time.sleep(data['pollingIntervalMillis'] / 1000)
             while len(data['items']) < total_items:
-                other_data = self.LiveChatMessages_list(livechatId, maxResults=2000, pageToken=pageToken)
+                other_data = self.live_chat_messages_list(livechatId, maxResults=2000, pageToken=pageToken)
                 if not other_data['items']:
                     break
                 else:
