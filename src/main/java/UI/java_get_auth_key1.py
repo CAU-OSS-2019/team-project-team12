@@ -32,5 +32,5 @@ f.close()
 
 credentials = flow.step2_exchange(auth_code)
 http_auth = credentials.authorize(httplib2.Http())
-storage = Storage("oauth_creds")
+storage = Storage(FILE_PATH+"oauth_creds")
 storage.put(credentials)
