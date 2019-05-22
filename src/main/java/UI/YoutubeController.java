@@ -41,7 +41,7 @@ class ScheduledJob extends TimerTask{
     private JSONObject retjsn = null;
 
     public void run() {
-        File sourceCode = new File("src/main/java/UI/getLiveMessageList.py");
+        File sourceCode = new File("src/main/java/Youtube/getLiveMessageList.py");
         String command = "cmd.exe /c python " + sourceCode.getAbsolutePath();
         System.out.println(command);
         try {
@@ -233,7 +233,7 @@ public class YoutubeController implements Initializable {
         return retjsn;
     }
     private void executeBotPythonScript(){
-        File sourceCode = new File("src/main/java/UI/bot.py");
+        File sourceCode = new File("src/main/java/Youtube/bot.py");
         String command = "cmd.exe /c python "+sourceCode.getAbsolutePath();
         System.out.println(command);
         try {
