@@ -62,8 +62,8 @@ public class TwitchController implements Initializable {
     // show keywords window.
     public void keywordsWindow(){
         try {
-        	URL url = getClass().getResource("/txt/keywords.txt");
-            Desktop.getDesktop().edit(new File(url.getPath()));
+        	/*URL url = getClass().getResource("/txt/keywords.txt");
+            Desktop.getDesktop().edit(new File(url.getPath()));*/
             Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/keywords.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
@@ -79,8 +79,8 @@ public class TwitchController implements Initializable {
     // show urls window.
     public void urlsWindow(){
         try {
-        	URL url = getClass().getResource("/txt/urls.txt");
-            Desktop.getDesktop().edit(new File(url.getPath()));
+        	/*URL url = getClass().getResource("/txt/urls.txt");
+            Desktop.getDesktop().edit(new File(url.getPath()));*/
             Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/urls.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
@@ -96,8 +96,8 @@ public class TwitchController implements Initializable {
     //show streamers window.
     public void streamersWindow(){
         try {
-        	URL url = getClass().getResource("/txt/streamers.txt");
-            Desktop.getDesktop().edit(new File(url.getPath()));
+        	/*URL url = getClass().getResource("/txt/streamers.txt");
+            Desktop.getDesktop().edit(new File(url.getPath()));*/
             Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/streamers.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();

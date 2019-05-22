@@ -6,19 +6,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-	xmlns:fx="http://javafx.com/fxml" fx:controller="UI.UrlsController"
-	prefHeight="185.0" prefWidth="347.0">
-
+<AnchorPane prefHeight="597.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.UrlsController">
 	<children>
-		<TextField layoutX="32.0" layoutY="23.0" prefHeight="42.0"
-			prefWidth="284.0" fx:id="inputString" />
-		<Button layoutX="32.0" layoutY="110.0" mnemonicParsing="false"
-			prefHeight="54.0" prefWidth="111.0" text="추가" fx:id="add" />
-		<Button layoutX="205.0" layoutY="110.0" mnemonicParsing="false"
-			prefHeight="54.0" prefWidth="111.0" text="삭제" fx:id="delete" />
-		<Label layoutX="32.0" layoutY="72.0"
-			text="추가하거나 삭제할 허용 url링크를 입력하고," />
-		<Label layoutX="32.0" layoutY="85.0" text="실행할 동작의 버튼을 입력하세요." />
+		<TextField fx:id="inputString" layoutX="32.0" layoutY="442.0" prefHeight="42.0" prefWidth="284.0" />
+		<Button fx:id="add" layoutX="32.0" layoutY="529.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="111.0" text="추가" />
+		<Button fx:id="delete" layoutX="205.0" layoutY="529.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="111.0" text="삭제" />
+		<Label layoutX="32.0" layoutY="491.0" text="추가하거나 삭제할 욕설 필터링 단어를 입력하고," />
+		<Label layoutX="32.0" layoutY="504.0" text="실행할 동작의 버튼을 입력하세요." />
+		<ScrollPane layoutX="33.0" layoutY="20.0" prefHeight="406.0" prefWidth="284.0">
+			<content>
+				<ListView prefHeight="649.0" prefWidth="280.0" fx:id="urlsList"/>
+			</content>
+		</ScrollPane>
 	</children>
 </AnchorPane>
