@@ -88,41 +88,6 @@ public class DataTable {
 		}
 		this.SetBWTable();
 	}
-	public void AddToBWTable(Vector<String> newWords)
-	{
-		FileWriter writer = null;
-		File file = new File(getClass().getResource("/txt/BADWORD.txt").getPath());
-		
-		for(int i = 0; i < newWords.size(); i++)
-		{
-	    	int index = BWTable[newWords.get(i).charAt(0)].indexOf(newWords.get(i));
-	    	if(index == -1)
-	    	{
-				try
-				{
-					writer = new FileWriter(file, true);
-					writer.write(newWords.get(i) + "\n");
-					writer.flush();
-				}
-				catch(IOException e)
-				{
-					e.printStackTrace();
-				}
-				finally
-				{
-					try
-					{
-						if(writer != null) writer.close();
-					}
-					catch(IOException e)
-					{
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		this.SetBWTable();
-	}
 	
 	public void DeleteFromBWTable(String deleteWord)
 	{
@@ -133,37 +98,6 @@ public class DataTable {
     	{
 			BWTable[(int)(deleteWord.charAt(0))].remove(deleteWord);	
 		}
-		try
-		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			for(int i = 0; i < 65536; i++)
-			{
-				for(int j = 0; j < BWTable[i].size(); j++)
-				{
-					writer.write(BWTable[i].get(j));
-					writer.newLine();
-					writer.flush();
-				}
-			}
-			writer.close();
-		}
-		catch(IOException e)
-		{
-		}		
-	}
-	public void DeleteFromBWTable(Vector<String> deleteWords)
-	{
-		File file = new File(getClass().getResource("/txt/BADWORD.txt").getPath());
-		
-		for(int i = 0; i < deleteWords.size(); i++)
-		{
-	    	int index = BWTable[(int)(deleteWords.get(i).charAt(0))].indexOf(deleteWords.get(i));
-	    	if(index != -1)
-	    	{
-				BWTable[(int)(deleteWords.get(i).charAt(0))].remove(deleteWords.get(i));	
-			}
-		}
-		
 		try
 		{
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -240,39 +174,6 @@ public class DataTable {
 		}
 		this.SetNamedList();
 	}
-	public void AddToNamedList(Vector<String> newUser)
-	{
-		File file = new File(getClass().getResource("/txt/NAMED.txt").getPath());
-		FileWriter writer = null;
-		for(int i = 0; i < newUser.size(); i++){
-			int index = namedList.indexOf(newUser.get(i));
-	    	if(index == -1)
-	    	{
-				try
-				{
-					writer = new FileWriter(file, true);
-					writer.write(newUser.get(i) + "\n");
-					writer.flush();
-				}
-				catch(IOException e)
-				{
-					e.printStackTrace();
-				}
-				finally
-				{
-					try
-					{
-						if(writer != null) writer.close();
-					}
-					catch(IOException e)
-					{
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		this.SetNamedList();
-	}
 
 	public void DeleteFromNamedList(String deleteUser)
 	{
@@ -300,36 +201,6 @@ public class DataTable {
 		{
 		}		
 	}
-	public void DeleteFromNamedList(Vector<String> deleteUser)
-	{
-		File file = new File(getClass().getResource("/txt/NAMED.txt").getPath());
-		
-		for(int i = 0; i < deleteUser.size(); i++)
-		{
-	    	int index = namedList.indexOf(deleteUser.get(i));
-	    	if(index != -1)
-	    	{
-				namedList.remove(deleteUser.get(i));	
-			}
-		}
-		
-		try
-		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-
-			for(int j = 0; j < namedList.size(); j++)
-			{
-				writer.write(namedList.get(j));
-				writer.newLine();
-				writer.flush();
-			}
-			writer.close();
-		}
-		catch(IOException e)
-		{
-		}		
-	}
-	
 	public void SetSafeURLList()
 	{
 		this.safeURLList = new ArrayList<String>();
@@ -388,41 +259,7 @@ public class DataTable {
 	    }
 		this.SetSafeURLList();
 	}
-	public void AddToURLList(Vector<String> newURL)
-	{
-		File file = new File(getClass().getResource("/txt/URL.txt").getPath());
-		FileWriter writer = null;
-		for(int i = 0; i < newURL.size(); i++)
-		{
-			int index = safeURLList.indexOf(newURL.get(i));
-	    	if(index == -1)
-	    	{
-				try
-				{
-					writer = new FileWriter(file, true);
-					writer.write(newURL.get(i) + "\n");
-					writer.flush();
-				}
-				catch(IOException e)
-				{
-					e.printStackTrace();
-				}
-				finally
-				{
-					try
-					{
-						if(writer != null) writer.close();
-					}
-					catch(IOException e)
-					{
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		this.SetSafeURLList();
-	}
-
+	
 	public void DeleteFromURLList(String deleteURL)
 	{
 		File file = new File(getClass().getResource("/txt/URL.txt").getPath());
@@ -448,34 +285,6 @@ public class DataTable {
 		catch(IOException e)
 		{
 		}	
-	}
-	public void DeleteFromURLList(Vector<String> deleteURL)
-	{
-		File file = new File(getClass().getResource("/txt/URL.txt").getPath());
-		
-		for(int i = 0; i < deleteURL.size(); i++)
-		{
-	    	int index = safeURLList.indexOf(deleteURL.get(i));
-	    	if(index != -1)
-	    	{
-				safeURLList.remove(deleteURL.get(i));	
-			}
-		}
-		
-		try
-		{
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-			for(int j = 0; j < safeURLList.size(); j++)
-			{
-				writer.write(safeURLList.get(j));
-				writer.newLine();
-				writer.flush();
-			}
-			writer.close();
-		}
-		catch(IOException e)
-		{
-		}		
 	}
 	
 	public ArrayList<String>[] getBWTable()
