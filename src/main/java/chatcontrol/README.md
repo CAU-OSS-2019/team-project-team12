@@ -10,7 +10,7 @@
  * 데이터들은 각각의 텍스트파일에 저장되어 있으며 File I/O의 방식으로 관리된다.
 
 ### Method Samples
-'''bash
+```bash
 SetBWTable();
 SetNamedList();
 SetSafeURLList();
@@ -21,7 +21,7 @@ DeleteFromBWTable(String deleteWord);
 DeleteFromNamedList(String deleteUser);
 DeleteFromURLList(String deleteURL);
 DeleteFromURLList(Vector<String> deleteURL);
-'''
+```
 ### Detail Example
 * 예시 1) DataProc.getDataTable.SetBWTable(); // "BADWORD.txt"의 정보를 받아들여 BWTable을 생성한다.
 * 예시 2) DataProc.getDataTable.AddToNamedList(newUser); // newUser의 스트링 벡터를 인자로 해, 이들이 기존의 리스트에 있나 확인하고 중복되지 않을 시 이들을 저장하고 추가된 정보를 포함한 네임드리스트를 재생성한다.
@@ -30,26 +30,26 @@ DeleteFromURLList(Vector<String> deleteURL);
 ## ChatData.java
  * 채팅에 대한 정보를 담고 있는 자료구조
 ### Variables Samples
-'''bash
+```bash
 private String userID;
 private String userNickName;
 private String chatText;
 private boolean isBadword;
 private boolean isNamed;
 private boolean havetoDisplay_Named;
-'''
+```
  
 ## ChatProc.java
  * 채팅 데이터와 관련된 작업을 처리하기 위한 class
 ### Method Samples
-'''bash
+```bash
 private void checkUser()
 public boolean checkUser(String userID)
 private void checkBadword()
 private boolean checkSafetyURL(int n)
 private boolean checkSpamImoji()
 public void doProc(ChatData inputds)
-'''
+```
 ### Detail Example
 * Chatting 내용 처리) chatProc.doProc(new ChatData(~))
 * User 방문 이벤트 처리) chatProc.checkUser(UserName as String)
