@@ -65,32 +65,31 @@ public class DataTable {
 		System.out.println(newWord);
 		
 	    int index = BWTable[newWord.charAt(0)].indexOf(newWord);
-	   	if(index == -1)
-	   	{
+	    if (index != -1) return false;
+		try
+		{
+			writer = new FileWriter(file, true);
+			writer.write(newWord + "\n");
+			writer.flush();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			ret = false;
+		}
+		finally
+		{
 			try
 			{
-				writer = new FileWriter(file, true);
-				writer.write(newWord + "\n");
-				writer.flush();
+				if(writer != null) writer.close();
 			}
 			catch(IOException e)
 			{
 				e.printStackTrace();
 				ret = false;
 			}
-			finally
-			{
-				try
-				{
-					if(writer != null) writer.close();
-				}
-				catch(IOException e)
-				{
-					e.printStackTrace();
-					ret = false;
-				}
-			}
 		}
+		
 		this.SetBWTable();
 		return ret;
 	}
@@ -101,10 +100,8 @@ public class DataTable {
 		File file = new File(getClass().getResource("/txt/BADWORD.txt").getPath());
 		
 		int index = BWTable[(int)(deleteWord.charAt(0))].indexOf(deleteWord);
-		if(index != -1)
-    	{
-			BWTable[(int)(deleteWord.charAt(0))].remove(deleteWord);	
-		}
+		if (index == -1) return false;
+		BWTable[(int)(deleteWord.charAt(0))].remove(deleteWord);	
 		try
 		{
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -158,32 +155,32 @@ public class DataTable {
 		File file = new File(getClass().getResource("/txt/NAMED.txt").getPath());
 		FileWriter writer = null;
 		int index = namedList.indexOf(newUser);
-	    if(index == -1)
-	    {
+		if (index != -1) return false;
+	    
+		try
+		{
+			writer = new FileWriter(file, true);
+			writer.write(newUser + "\n");
+			writer.flush();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			ret = false;
+		}
+		finally
+		{
 			try
 			{
-				writer = new FileWriter(file, true);
-				writer.write(newUser + "\n");
-				writer.flush();
+				if(writer != null) writer.close();
 			}
 			catch(IOException e)
 			{
 				e.printStackTrace();
 				ret = false;
 			}
-			finally
-			{
-				try
-				{
-					if(writer != null) writer.close();
-				}
-				catch(IOException e)
-				{
-					e.printStackTrace();
-					ret = false;
-				}
-			}
 		}
+		
 		this.SetNamedList();
 		return ret;
 	}
@@ -194,10 +191,9 @@ public class DataTable {
 		File file = new File(getClass().getResource("/txt/NAMED.txt").getPath());
 		
 	    int index = namedList.indexOf(deleteUser);
-	    if(index != -1)
-	    {
-			namedList.remove(deleteUser);	
-		}
+	    if (index == -1) return false;
+	    
+		namedList.remove(deleteUser);
 	    
 		try
 		{
@@ -250,32 +246,30 @@ public class DataTable {
 		FileWriter writer = null;
 	
 		int index = safeURLList.indexOf(newURL);
-	    if(index == -1)
-	    {
+		if (index != -1) return false;
+		try
+		{
+			writer = new FileWriter(file, true);
+			writer.write(newURL + "\n");
+			writer.flush();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			ret =  false;
+		}
+		finally
+		{
 			try
 			{
-				writer = new FileWriter(file, true);
-				writer.write(newURL + "\n");
-				writer.flush();
+				if(writer != null) writer.close();
 			}
 			catch(IOException e)
 			{
 				e.printStackTrace();
-				ret =  false;
+				ret = false;
 			}
-			finally
-			{
-				try
-				{
-					if(writer != null) writer.close();
-				}
-				catch(IOException e)
-				{
-					e.printStackTrace();
-					ret = false;
-				}
-			}
-	    }
+		}
 		this.SetSafeURLList();
 		return ret;
 	}
@@ -287,10 +281,8 @@ public class DataTable {
 		
 
 	    int index = safeURLList.indexOf(deleteURL);
-	    if(index != -1)
-	    {
-			safeURLList.remove(deleteURL);	
-		}
+	    if (index == -1) return false;
+		safeURLList.remove(deleteURL);	
 		
 		try
 		{
