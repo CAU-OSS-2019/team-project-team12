@@ -23,23 +23,23 @@ public class UrlsController implements Initializable {
     @FXML private Button add;
     @FXML private Button delete;
     @FXML private ListView<String> urlsList;
-
+    DataTable dataTable;
+    
     @Override
     public void initialize (URL location, ResourceBundle resources){
-        add.setOnAction(event -> addUrls(true));
+        add.setOnAction(event -> addUrls());
         delete.setOnAction(event -> deleteUrls(true));
         setUrlsList();
     }
 
     private void setUrlsList() {
-        DataTable dataTable = new DataTable();
+       dataTable = new DataTable();
        urlsList.setItems(FXCollections.observableList(dataTable.getSafeURLList()));
-
     }
 
-    private void addUrls ( boolean isExist){
-        if (isExist) inputFailWindow("Add URL failed");
-        else inputSuccessWindow("Add URL succeed");
+    private void addUrls (){
+    	
+        
 
     }
     private void deleteUrls ( boolean isExist){

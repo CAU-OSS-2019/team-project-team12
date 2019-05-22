@@ -56,10 +56,13 @@ public class DataTable {
 	        System.out.println(e);
 	    }
 	}
-	public void AddToBWTable(String newWord)
+	public boolean AddToBWTable(String newWord)
 	{
+		boolean ret = true;
 		FileWriter writer = null;
 		File file = new File(getClass().getResource("/txt/BADWORD.txt").getPath());
+		
+		System.out.println(newWord);
 		
 	    int index = BWTable[newWord.charAt(0)].indexOf(newWord);
 	   	if(index == -1)
@@ -73,6 +76,7 @@ public class DataTable {
 			catch(IOException e)
 			{
 				e.printStackTrace();
+				ret = false;
 			}
 			finally
 			{
@@ -83,14 +87,17 @@ public class DataTable {
 				catch(IOException e)
 				{
 					e.printStackTrace();
+					ret = false;
 				}
 			}
 		}
 		this.SetBWTable();
+		return ret;
 	}
 	
-	public void DeleteFromBWTable(String deleteWord)
+	public boolean DeleteFromBWTable(String deleteWord)
 	{
+		boolean ret = true;
 		File file = new File(getClass().getResource("/txt/BADWORD.txt").getPath());
 		
 		int index = BWTable[(int)(deleteWord.charAt(0))].indexOf(deleteWord);
@@ -114,7 +121,9 @@ public class DataTable {
 		}
 		catch(IOException e)
 		{
+			ret = false;
 		}		
+		return ret;
 	}
 	
 	public void SetNamedList()
@@ -143,8 +152,9 @@ public class DataTable {
 	    }
 	}
 
-	public void AddToNamedList(String newUser)
+	public boolean AddToNamedList(String newUser)
 	{
+		boolean ret = true;
 		File file = new File(getClass().getResource("/txt/NAMED.txt").getPath());
 		FileWriter writer = null;
 		int index = namedList.indexOf(newUser);
@@ -159,6 +169,7 @@ public class DataTable {
 			catch(IOException e)
 			{
 				e.printStackTrace();
+				ret = false;
 			}
 			finally
 			{
@@ -169,14 +180,17 @@ public class DataTable {
 				catch(IOException e)
 				{
 					e.printStackTrace();
+					ret = false;
 				}
 			}
 		}
 		this.SetNamedList();
+		return ret;
 	}
 
-	public void DeleteFromNamedList(String deleteUser)
+	public boolean DeleteFromNamedList(String deleteUser)
 	{
+		boolean ret = true;
 		File file = new File(getClass().getResource("/txt/NAMED.txt").getPath());
 		
 	    int index = namedList.indexOf(deleteUser);
@@ -199,7 +213,9 @@ public class DataTable {
 		}
 		catch(IOException e)
 		{
+			ret = false;
 		}		
+		return ret;
 	}
 	public void SetSafeURLList()
 	{
@@ -227,8 +243,9 @@ public class DataTable {
 	    }
 	}
 
-	public void AddToURLList(String newURL)
+	public boolean AddToURLList(String newURL)
 	{
+		boolean ret = true;
 		File file = new File(getClass().getResource("/txt/URL.txt").getPath());
 		FileWriter writer = null;
 	
@@ -244,6 +261,7 @@ public class DataTable {
 			catch(IOException e)
 			{
 				e.printStackTrace();
+				ret =  false;
 			}
 			finally
 			{
@@ -254,14 +272,17 @@ public class DataTable {
 				catch(IOException e)
 				{
 					e.printStackTrace();
+					ret = false;
 				}
 			}
 	    }
 		this.SetSafeURLList();
+		return ret;
 	}
 	
-	public void DeleteFromURLList(String deleteURL)
+	public boolean DeleteFromURLList(String deleteURL)
 	{
+		boolean ret = true;
 		File file = new File(getClass().getResource("/txt/URL.txt").getPath());
 		
 
@@ -284,7 +305,9 @@ public class DataTable {
 		}
 		catch(IOException e)
 		{
+			ret = false;
 		}	
+		return ret;
 	}
 	
 	public ArrayList<String>[] getBWTable()
