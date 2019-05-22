@@ -40,12 +40,12 @@ public class UrlsController implements Initializable {
     private void addUrls ( boolean isExist){
         if (isExist) inputFailWindow("Add URL failed");
         else inputSuccessWindow("Add URL succeed");
-        setUrlsList();
+
     }
     private void deleteUrls ( boolean isExist){
         if (isExist) inputSuccessWindow("delete URL succeed");
         else inputFailWindow("Delete URL failed");
-        setUrlsList();
+
     }
 
     private void inputFailWindow (String whatOperation){

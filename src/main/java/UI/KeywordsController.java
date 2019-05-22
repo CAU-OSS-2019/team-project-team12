@@ -48,12 +48,12 @@ public class KeywordsController implements Initializable {
     private void addKeyword(boolean isExist) {
         if(isExist) inputFailWindow("Add Keyword failed");
         else inputSuccessWindow("Add Keyword succeed");
-        setKeywordsList();
+
     }
     private void deleteKeyword(boolean isExist) {
         if(isExist) inputSuccessWindow("delete Keyword succeed");
         else inputFailWindow("Delete Keyword failed");
-        setKeywordsList();
+
     }
 
     private void inputFailWindow(String whatOperation) {

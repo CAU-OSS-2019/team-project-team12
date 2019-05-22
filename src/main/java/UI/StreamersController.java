@@ -41,12 +41,12 @@ public class StreamersController implements Initializable {
     private void addStreamer(boolean isExist) {
         if(isExist) inputFailWindow("Add Streamer failed");
         else inputSuccessWindow("Add Streamer succeed");
-        setStreamersList();
+
     }
     private void deleteStreamer(boolean isExist) {
         if(isExist) inputSuccessWindow("delete Streamer succeed");
         else inputFailWindow("Delete Streamer failed");
-        setStreamersList();
+
     }
 
     private void inputFailWindow(String whatOperation) {
