@@ -31,8 +31,11 @@
 * [Maven을 윈도우 10에 설치하기](https://printhelloworld.tistory.com/113)
 * [Eclipse에서 JavaFX 컴파일하기](https://www.eclipse.org/efxclipse/references.html)
 
+# Travis CI
+* [![Build Status](https://travis-ci.org/CAU-OSS-2019/team-project-team12.svg?branch=master)](https://travis-ci.org/CAU-OSS-2019/team-project-team12)
+
 # DDokDDok Youtube Live Streaming Python Module Repository.
-[DDokDDok Livestreaming Python Module](https://github.com/cauchatbot/Youtube)
+* [DDokDDok Livestreaming Python Module](https://github.com/cauchatbot/Youtube)
 
 ## 이 Release Version은 Windows 용입니다.
  * Youtube 기능을 사용하실때에는, 위에 게시된 DDokDDok Python Module의 README를 반드시 읽어주셔야 동작합니다.
