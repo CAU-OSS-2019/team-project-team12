@@ -73,10 +73,16 @@ public class DDokDDokTwitch {
 		}
 		return true;
 	}
-	public void banUser(String UserName) {
+	public ArrayList<ChatDataProperty> banUser(String UserName) {
+		ArrayList<ChatDataProperty> ret = new ArrayList<>();
 		String banMsg = "/ban " + UserName;
 		client.sendMessage(CHANNEL, banMsg);
-		
+		for (ChatDataProperty sameUser : chatDataProperty) {
+			if (sameUser.getUserID().getValue().equals(UserName)) {
+				ret.add(sameUser);
+			}
+		}
+		return ret;
 	}
 	public ObservableList<ChatDataProperty> getChatDataObservableList() {
 		return chatDataProperty;
@@ -102,7 +108,9 @@ public class DDokDDokTwitch {
 	}
 	public static void disconnect() {
 		if (client != null) {
-			client.shutdown();			
+			System.out.println("Connection End");
+			client.shutdown();
 		}
+		client = null;
 	}
 }

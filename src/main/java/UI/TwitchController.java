@@ -4,6 +4,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.BooleanProperty;
@@ -111,7 +112,7 @@ public class TwitchController implements Initializable {
     }
 
     public void banUser(ChatDataProperty selected) {
-    	ddokddok.banUser(selected.getUserID().getValue());
+    	ArrayList<ChatDataProperty> banMsg = ddokddok.banUser(selected.getUserID().getValue());
     	try {
             Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputSuccess.fxml"));
             Scene newScene = new Scene(newPane);
@@ -125,6 +126,9 @@ public class TwitchController implements Initializable {
 
         twitchTable.getSelectionModel().clearSelection();
         twitchTable.getItems().remove(selected);
+        for (ChatDataProperty sameUserChat : banMsg) {
+        	twitchTable.getItems().remove(sameUserChat);
+        }
     }
     public StringProperty setStatus(BooleanProperty isBadword, BooleanProperty isNamed) {
         if(isBadword.getValue() == true) {
