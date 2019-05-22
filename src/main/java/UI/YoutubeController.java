@@ -37,7 +37,6 @@ class ScheduledJob extends TimerTask{
     private JSONObject retjsn = null;
 
     public void run() {
-        //TODO
         File sourceCode = new File("src/main/java/UI/getLiveMessageList.py");
         String command = "cmd.exe /c python " + sourceCode.getAbsolutePath();
         System.out.println(command);
@@ -77,6 +76,13 @@ class ScheduledJob extends TimerTask{
             return null;
         }
     }
+}
+
+class JsonParsingSchedule extends TimerTask{
+    public void run() {
+
+    }
+
 }
 
 
@@ -122,10 +128,16 @@ public class YoutubeController implements Initializable {
             ChatDataProperty selected = youtubeTable.getSelectionModel().getSelectedItem();
             banUser(selected);
         });
+
         ScheduledJob job = new ScheduledJob();
         Timer jobScheduler = new Timer();
         //After 5000ms pass, run jsonparser
         jobScheduler.scheduleAtFixedRate(job, 1000, 5000);
+
+        JsonParsingSchedule parseAndAddJob = new JsonParsingSchedule();
+        Timer parseAndAddScheduler = new Timer();
+        //After 5000ms pass, run
+        parseAndAddScheduler.scheduleAtFixedRate(parseAndAddJob,1000,6000);
 
         //Execute Python bot.py
         executeBotPythonScript();
