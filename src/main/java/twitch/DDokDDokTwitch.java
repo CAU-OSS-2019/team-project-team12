@@ -29,15 +29,25 @@ public class DDokDDokTwitch {
 	public static class Listener {
         @Handler
         public void onUserJoinChannel(ChannelJoinEvent event) {
-        	chatProc.checkUser(event.getActor().getHost());
+        	if (chatProc.checkUser(event.getActor().getName())) {
+        		event.getChannel().sendMessage("안녕하세요! " + event.getActor().getName());
+        	}
         }
         @Handler
         public void onMsgFired(ChannelMessageEvent event) {
         	ChatData newChat = new ChatData(event.getActor().getNick(), 
         			event.getActor().getHost(), event.getMessage());
+        	System.out.println(event.getActor().getNick());
+        	System.out.println(event.getActor().getUserString());
+        	System.out.println(event.getActor().getName());
+        	System.out.println(event.getActor().getAccount().toString());
+        	System.out.println(event.getActor().toString());
         	chatProc.doProc(newChat);
         	if (newChat.getIsBadword()) {
         		chatDataProperty.add(new ChatDataProperty(newChat));
+        	}
+        	if (newChat.getHavetoDisplay_Named()) {
+        		event.sendReply("안녕하세요! " + event.getActor().getNick() + "님!");
         	}
         }
     }
@@ -94,5 +104,10 @@ public class DDokDDokTwitch {
 			return null;
 		}
 		return ret;
+	}
+	public static void disconnect() {
+		if (client != null) {
+			client.shutdown();			
+		}
 	}
 }

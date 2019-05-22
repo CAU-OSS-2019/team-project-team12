@@ -151,4 +151,5 @@ public class TwitchController implements Initializable {
             ex.printStackTrace();
         }
     }
+    
 }
