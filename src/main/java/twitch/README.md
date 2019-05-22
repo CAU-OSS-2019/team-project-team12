@@ -8,12 +8,12 @@
  * Listner Inner Class를 이용해 메세지 서버에서 특정 메세지 혹은 event가 발생할 시 관련 작업을 처리해줍니다.
 
 ### Method Samples
-'''bash
+```bash
 boolean connect();
 void banUser();
 ObservableList<ChatDataProperty> getChatDataObservableList();
 String oauthString();
-'''
+```
 ### Must Do
 * [Twitch OAUTH 키 발급](https://twitchapps.com/tmi/)을 받아 src/main/resources/json 폴더에 키를 저장해야 합니다.
 * Maven 설정을 하여 [IRC연결을 위한 Kitteh](https://kitteh.org/) 와 [JSON 오브젝트 설정을 위한 org.json](https://mvnrepository.com/artifact/org.json/json) 라이브러리 설정을 완료해야 합니다.
