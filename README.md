@@ -20,12 +20,16 @@
  * 각 기능에 맞는 버튼을 누르면 각 기능에 해당하는 현재의 Document와 Document 수정을 위한 입력창이 열립니다.
  * 입력창에 수정할 내용을 입력한 뒤 추가 또는 삭제 버튼을 누르면 Document가 수정됩니다.
 
+## 모든 리소스 파일은 코드와 분리되어 있습니다.
+* src/main/resources 폴더 아래에 image, fxml, font 등 각종 리소스 파일들이 존재합니다.
+* OATUH Key관리를 위한 JSON폴더의 경우 OATUH 키 보호를 위해 Git에 업로드되지 않으므로 반드시 Google 혹은 Twitch에서 개별적으로 키를 발급받아 사용하여야 합니다.
+
+## Package별 ReadMe가 존재합니다.
+* 세부적인 흐름을 파악하고 싶다면, 각 패키지 폴더(ex> src/main/java/twitch)에 존재하는 README.md파일을 확인하시기 바랍니다.
+
 # Installation
-* Maven을 이용하는 프로젝트이므로, .zip파일을 로컬에 다운받아서 압축을 푼 뒤 Maven Project에 Import해야합니다.
-* Javafx 기반의 UI입니다. javafxapplication을 extends하고있는 Main.java파일을 run하면, UI의 PrimaryStage를 Start합니다.
-* TwitchController.java와 YoutubeController.java의 
-*Desktop.getDesktop().edit(new File("AbsolutePath"));*
-으로 구현된 필터링 할 욕설과 채팅 허용 url링크, 입장 안내를 받을 스트리머 각각의 목록을 저장하고있는 .txt파일을 여는 부분에서, "AbsolutePath"부분을 RelativePath로 대체하는 방법을 아직 찾지 못했습니다. 실행하시기  Repository에 포함되어있는 keywords.txt, urls.txt, streamers.txt파일의 절대경로를 수정해주셔야합니다.
+* [Maven을 윈도우 10에 설치하기](https://printhelloworld.tistory.com/113)
+* [Eclipse에서 JavaFX 컴파일하기](https://www.eclipse.org/efxclipse/references.html)
 
 # DDokDDok Youtube Live Streaming Python Module Repository.
 [DDokDDok Livestreaming Python Module](https://github.com/cauchatbot/Youtube)
