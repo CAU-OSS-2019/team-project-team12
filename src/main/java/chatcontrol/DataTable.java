@@ -39,7 +39,6 @@ public class DataTable {
 
 			BufferedReader bufReader = new BufferedReader(filereader);
 			String line = "";
-			
 			while((line = bufReader.readLine()) != null)
 			{
 				BWTable[(int)(line.charAt(0))].add(line);

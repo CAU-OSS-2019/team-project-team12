@@ -62,6 +62,7 @@ public class DDokDDokTwitch {
 	        client.connect();
 	        client.getEventManager().registerEventListener(new Listener());
 	        client.addChannel(CHANNEL);
+	        client.sendMessage(CHANNEL, "똑똑이 입장하였습니다.");
 		} catch (Exception e) {
 			return false;
 		}
@@ -70,6 +71,7 @@ public class DDokDDokTwitch {
 	public void banUser(String UserName) {
 		String banMsg = "/ban " + UserName;
 		client.sendMessage(CHANNEL, banMsg);
+		
 	}
 	public ObservableList<ChatDataProperty> getChatDataObservableList() {
 		return chatDataProperty;

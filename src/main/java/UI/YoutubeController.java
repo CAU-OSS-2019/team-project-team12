@@ -29,32 +29,22 @@ public class YoutubeController implements Initializable {
     @FXML
     private Button streamers;
     @FXML
-    private TableView<tempDSProperty> youtubeTable;
+    private TableView<ChatDataProperty> youtubeTable;
     @FXML
-    private TableColumn<tempDSProperty, String> userID;
+    private TableColumn<ChatDataProperty, String> userID;
     @FXML
-    private TableColumn<tempDSProperty, String> nickName;
+    private TableColumn<ChatDataProperty, String> nickName;
     @FXML
-    private TableColumn<tempDSProperty, String> chat;
+    private TableColumn<ChatDataProperty, String> chat;
     @FXML
-    private TableColumn<tempDSProperty, String> status;
-
-    //temp initialize for show test
-    tempDS sangheon = new tempDS("comnamu18", "킹잘빛상헌", "병신들 ㅉㅉ");
-
-    tempDS jewoong = new tempDS("jwoonge", "쩨웅", "개노답이네 ㅅㅂ");
-
+    private TableColumn<ChatDataProperty, String> status;
 
     //initialize table contents, button actions.
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        sangheon.setIsBadword(true);
-        jewoong.setIsBadword(true);
 
-        ObservableList<tempDSProperty> myList = FXCollections.observableArrayList(
-            new tempDSProperty("jjiho", "노래하는찌호", "hello",false ,true),
-            new tempDSProperty(sangheon),
-            new tempDSProperty(jewoong)
+        ObservableList<ChatDataProperty> myList = FXCollections.observableArrayList(
+
         );
 
         userID.setCellValueFactory(cellData -> cellData.getValue().getUserID());
@@ -69,7 +59,7 @@ public class YoutubeController implements Initializable {
         streamers.setOnAction(event->streamersWindow());
 
         youtubeTable.setOnMouseClicked(event -> {
-            tempDSProperty selected = youtubeTable.getSelectionModel().getSelectedItem();
+            ChatDataProperty selected = youtubeTable.getSelectionModel().getSelectedItem();
             banUser(selected);
         });
 
@@ -90,8 +80,8 @@ public class YoutubeController implements Initializable {
     }
 
     /*
-    public void addList(tempDS element) {
-        youtubeTable.getItems().add(new tempDSProperty(element);
+    public void addList(ChatData element) {
+        youtubeTable.getItems().add(new ChatDataProperty(element);
     }
     */
 
@@ -147,7 +137,7 @@ public class YoutubeController implements Initializable {
 
     }
     
-    public void banUser(tempDSProperty selected) {
+    public void banUser(ChatDataProperty selected) {
         if(false) {
             try {
                 Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputSuccess.fxml"));

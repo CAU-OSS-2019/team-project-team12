@@ -32,10 +32,6 @@ public class ChatProc {
 		{
 			System.out.println("욕설임");
 		}
-		else
-		{
-			System.out.println("ok");
-		}
 	}
 	
 	private void checkUser()

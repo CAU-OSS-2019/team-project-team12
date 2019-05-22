@@ -111,7 +111,7 @@ public class TwitchController implements Initializable {
     }
 
     public void banUser(ChatDataProperty selected) {
-    	ddokddok.banUser(selected.getUserNickName().getValue());
+    	ddokddok.banUser(selected.getUserID().getValue());
     	try {
             Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputSuccess.fxml"));
             Scene newScene = new Scene(newPane);
