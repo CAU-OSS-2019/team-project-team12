@@ -1,0 +1,13 @@
+language: java
+jdk:
+  - oraclejdk8
+  - openjdk8
+sudo: false
+install: true
+script: ./mvnw clean verify
+notifications:
+  email:
+    recipients:
+      - 20145523.sw.cau@gmail.com
+    on_success: change
+    on_failure: never
