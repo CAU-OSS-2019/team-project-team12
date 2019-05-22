@@ -2,9 +2,21 @@ package UI;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+//Seongmin Java Scheduler
+import java.util.Timer;
+import java.util.TimerTask;
+
+//Seongmin JSON Parser
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -19,6 +31,54 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
+
+class ScheduledJob extends TimerTask{
+    private JSONObject retjsn = null;
+
+    public void run() {
+        //TODO
+        File sourceCode = new File("src/main/java/UI/getLiveMessageList.py");
+        String command = "cmd.exe /c python " + sourceCode.getAbsolutePath();
+        System.out.println(command);
+        try {
+            Process p = Runtime.getRuntime().exec(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String jsn = "";
+        try {
+            File chatjsonfile = new File("chatdata.json");
+            FileReader file_reader = new FileReader(chatjsonfile);
+            int cur = 0;
+            while((cur = file_reader.read())!=-1) {
+                jsn = jsn + (char)cur;
+            }
+            file_reader.close();
+        }catch (FileNotFoundException e){
+            e.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject object = (JSONObject) parser.parse(jsn);
+            this.retjsn = object;
+        }catch(ParseException e){
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject getJSONFile(){
+        if(retjsn != null) {
+            return this.retjsn;
+        }
+        else{
+            return null;
+        }
+    }
+}
+
 
 public class YoutubeController implements Initializable {
     //3Buttons, TableView initialize.
@@ -62,10 +122,17 @@ public class YoutubeController implements Initializable {
             ChatDataProperty selected = youtubeTable.getSelectionModel().getSelectedItem();
             banUser(selected);
         });
-
+        ScheduledJob job = new ScheduledJob();
+        Timer jobScheduler = new Timer();
+        //After 5000ms pass, run jsonparser
+        jobScheduler.scheduleAtFixedRate(job, 1000, 5000);
 
         //Execute Python bot.py
         executeBotPythonScript();
+    }
+
+    private void jsonRead(JSONObject jsnfile){
+
     }
 
     private void executeBotPythonScript(){
