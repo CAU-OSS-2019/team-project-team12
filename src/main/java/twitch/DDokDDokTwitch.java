@@ -66,7 +66,10 @@ public class DDokDDokTwitch {
 						seconds / 3600, (seconds % 3600) / 60, seconds % 60);
 				event.sendReply(uptimeString);
 			}
-			else if (command.substring(0, 2).equals("추가")) {
+			else if (command.substring(0, 2).equals("추가"))
+			{
+				if(!event.getActor().getNick().equals(CHANNEL.replaceFirst("#","")))
+					return false;
 				String[] splitted_command = command.split(" ");
 				if (splitted_command.length != 3)
 					return false;
