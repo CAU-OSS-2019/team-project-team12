@@ -3,7 +3,11 @@ package twitch;
 import java.io.File;
 import java.io.FileReader;
 import java.io.InputStream;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -23,10 +27,11 @@ public class DDokDDokTwitch {
 	private static String CHANNEL;
 	private static ChatProc chatProc;
 	private static Client client;
-	
+	private static LocalDateTime startTime;
 	private static ObservableList<ChatDataProperty> chatDataProperty;
 	
 	public static class Listener {
+		private static HashMap<String, String> customCommand = new HashMap<>();
         @Handler
         public void onUserJoinChannel(ChannelJoinEvent event) {
         	if (chatProc.checkUser(event.getActor().getName())) {
@@ -35,6 +40,10 @@ public class DDokDDokTwitch {
         }
         @Handler
         public void onMsgFired(ChannelMessageEvent event) {
+        	if (event.getMessage().charAt(0) == '!') {
+				if (handleCustomCommand(event))
+					return;
+			}
         	ChatData newChat = new ChatData(event.getActor().getNick(), 
         			event.getActor().getHost(), event.getMessage());
         	chatProc.doProc(newChat);
@@ -45,12 +54,42 @@ public class DDokDDokTwitch {
         		event.sendReply("안녕하세요! " + event.getActor().getNick() + "님!");
         	}
         }
+        private boolean handleCustomCommand(ChannelMessageEvent event) {
+        	String message = event.getMessage();
+        	String command = message.replaceFirst("!", "");
+
+			if (command.equals("업타임")) {
+				LocalDateTime uptime = LocalDateTime.now();
+				Duration duration = Duration.between(startTime, uptime);
+				long seconds = Math.abs(duration.getSeconds());
+				String uptimeString = String.format("%02d시간 %02d분 %02d초",
+						seconds / 3600, (seconds % 3600) / 60, seconds % 60);
+				event.sendReply(uptimeString);
+			}
+			else if (command.substring(0, 2).equals("추가")) {
+				String[] splitted_command = command.split(" ");
+				if (splitted_command.length != 3)
+					return false;
+				String newCommand = splitted_command[1];
+				String newAnswer = splitted_command[2];
+				customCommand.put(newCommand, newAnswer);
+				event.sendReply(newCommand +  " 명령어가 추가되었습니다!");
+			}
+			else if (customCommand.keySet().contains(command)){
+				event.sendReply(customCommand.get(command));
+			}
+			else {
+				return false;
+			}
+        	return true;
+		}
     }
 
 	public DDokDDokTwitch(String UserName) {
 		CHANNEL = "#" + UserName;
 		chatProc = new ChatProc();
 		chatDataProperty = FXCollections.observableArrayList();
+		startTime = LocalDateTime.now();
 	}
 	
 	public boolean connect() {
