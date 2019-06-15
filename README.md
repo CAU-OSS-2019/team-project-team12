@@ -31,7 +31,8 @@
 * [Maven을 윈도우 10에 설치하기](https://printhelloworld.tistory.com/113)
 * [Eclipse에서 JavaFX 컴파일하기](https://www.eclipse.org/efxclipse/references.html)
 
-# DDokDDok Youtube Live Streaming Python Module Repository.
+# DDokDDok Youtube Live Streaming Python Module Repository
+* Release용으로 combine 하기 전의 독자적인 Python Module은 아래의 링크에서 보실 수 있습니다.
 * [DDokDDok Livestreaming Python Module](https://github.com/cauchatbot/Youtube)
 
 ## 이 Release Version은 Windows 용입니다.
