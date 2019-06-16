@@ -4,7 +4,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.BooleanProperty;
@@ -25,11 +24,15 @@ import twitch.DDokDDokTwitch;
 public class TwitchController implements Initializable {
     //3Buttons, TableView initialize.
     @FXML
-    private Button keywords, urls, streamers;
+    private Button keywords, urls, streamers, banButton, timeOutButton;
     @FXML
     private TableView<ChatDataProperty> twitchTable;
     @FXML
     private TableColumn<ChatDataProperty, String> userID, nickName, chat, status;
+    @FXML
+    private TableView<ChatDataProperty> streamersTable;
+    @FXML
+    private TableColumn<ChatDataProperty, String> streamerNmae, streamerChat;
     
     private DDokDDokTwitch ddokddok;
     private String UserName;
@@ -46,9 +49,13 @@ public class TwitchController implements Initializable {
         keywords.setOnAction(event -> keywordsWindow());
         urls.setOnAction(event -> urlsWindow());
         streamers.setOnAction(event->streamersWindow());
-        twitchTable.setOnMouseClicked(event -> {
+        banButton.setOnMouseClicked(event -> {
             ChatDataProperty selected = twitchTable.getSelectionModel().getSelectedItem();
             banUser(selected);
+        });
+        timeOutButton.setOnMouseClicked(event -> {
+            ChatDataProperty selected = twitchTable.getSelectionModel().getSelectedItem();
+            timeOutUser(selected);
         });
     }
     public void setUserName(String UserName) {
@@ -112,7 +119,7 @@ public class TwitchController implements Initializable {
     }
 
     public void banUser(ChatDataProperty selected) {
-    	ArrayList<ChatDataProperty> banMsg = ddokddok.banUser(selected.getUserID().getValue());
+    	ddokddok.banUser(selected.getUserID().getValue());
     	try {
             Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputSuccess.fxml"));
             Scene newScene = new Scene(newPane);
@@ -126,9 +133,22 @@ public class TwitchController implements Initializable {
 
         twitchTable.getSelectionModel().clearSelection();
         twitchTable.getItems().remove(selected);
-        for (ChatDataProperty sameUserChat : banMsg) {
-        	twitchTable.getItems().remove(sameUserChat);
+    }
+    public void timeOutUser(ChatDataProperty selected) {
+        //ddokddok.timeOutUser(selected.getUserID().getValue());
+        try {
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputSuccess.fxml"));
+            Scene newScene = new Scene(newPane);
+            Stage newStage = new Stage();
+            newStage.setScene(newScene);
+            newStage.setTitle(selected.getUserNickName().getValue() + " was banned");
+            newStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        twitchTable.getSelectionModel().clearSelection();
+        twitchTable.getItems().remove(selected);
     }
     public StringProperty setStatus(BooleanProperty isBadword, BooleanProperty isNamed) {
         if(isBadword.getValue() == true) {
@@ -155,5 +175,4 @@ public class TwitchController implements Initializable {
             ex.printStackTrace();
         }
     }
-    
 }
