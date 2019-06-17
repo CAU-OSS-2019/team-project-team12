@@ -29,6 +29,8 @@ public class DDokDDokTwitch {
 	private static Client client;
 	private static LocalDateTime startTime;
 	private static ObservableList<ChatDataProperty> chatDataProperty;
+	private static LocalDateTime lastKKtime; //for KK event
+	private static long bestKKtime; //for KK event
 	
 	public static class Listener {
 		private static HashMap<String, String> customCommand = new HashMap<>();
@@ -53,15 +55,36 @@ public class DDokDDokTwitch {
         	if (newChat.getHavetoDisplay_Named()) {
         		event.sendReply("안녕하세요! " + event.getActor().getNick() + "님!");
         	}
+        	/////////
+        	if(newChat.getKKevent())
+        	{
+        		event.sendReply("500개의 웃음이 수집되었습니다");
+        		long timefromlastkktime = getTime(lastKKtime); //마지막 lastkktime부터 지난 시간
+        		if(timefromlastkktime<bestKKtime) //더 짧은 기간 안에 500개의 웃음이 카운트되었다면
+        		{
+        			event.sendReply("오늘 최고 호응!!");
+        			bestKKtime = timefromlastkktime;
+        		}
+        		
+        		lastKKtime = LocalDateTime.now();
+        	}
+        	/////
         }
+        
+        ////이부분 따로 함수로 뺐어용 다시쓸라고
+        private long getTime(LocalDateTime start)
+        {
+        	LocalDateTime uptime = LocalDateTime.now();
+        	Duration duration = Duration.between(start, uptime);
+        	return Math.abs(duration.getSeconds());
+        }
+        
         private boolean handleCustomCommand(ChannelMessageEvent event) {
         	String message = event.getMessage();
         	String command = message.replaceFirst("!", "");
 
 			if (command.equals("업타임")) {
-				LocalDateTime uptime = LocalDateTime.now();
-				Duration duration = Duration.between(startTime, uptime);
-				long seconds = Math.abs(duration.getSeconds());
+				long seconds = getTime(startTime);
 				String uptimeString = String.format("%02d시간 %02d분 %02d초",
 						seconds / 3600, (seconds % 3600) / 60, seconds % 60);
 				event.sendReply(uptimeString);
@@ -87,12 +110,14 @@ public class DDokDDokTwitch {
         	return true;
 		}
     }
-
+	///lastKKtime하고 bestKKtime초기화 (best는 매우 큰 값으로)
 	public DDokDDokTwitch(String UserName) {
 		CHANNEL = "#" + UserName;
 		chatProc = new ChatProc();
 		chatDataProperty = FXCollections.observableArrayList();
 		startTime = LocalDateTime.now();
+		lastKKtime = startTime;
+		bestKKtime = 100000000;
 	}
 	
 	public boolean connect() {

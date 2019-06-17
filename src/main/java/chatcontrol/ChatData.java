@@ -9,6 +9,7 @@ public class ChatData {
 	private boolean isBadword;
 	private boolean isNamed;
 	private boolean havetoDisplay_Named;
+	private boolean KKevent;
 
 	//For Youtube
 	private String channelID;
@@ -40,6 +41,7 @@ public class ChatData {
 		this.isBadword = false;
 		this.isNamed = false;
 		this.havetoDisplay_Named = false;
+		this.KKevent = false;
 		this.channelID = channelID;
 		this.youtubeLiveChatID = youtubeLiveChatID;
 	}
@@ -79,6 +81,14 @@ public class ChatData {
 	public boolean getHavetoDisplay_Named()
 	{
 		return havetoDisplay_Named;
+	}
+	public void setKKevent(boolean tf)
+	{
+		this.KKevent = true;
+	}
+	public boolean getKKevent()
+	{
+		return this.KKevent;
 	}
 
 }
