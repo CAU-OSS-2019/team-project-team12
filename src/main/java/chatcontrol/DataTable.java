@@ -249,9 +249,42 @@ public class DataTable {
 		if (index != -1) return false;
 		try
 		{
-			writer = new FileWriter(file, true);
-			writer.write(newURL + "\n");
-			writer.flush();
+			if(newURL.substring(0, 8).equals("https://"))
+			{
+				writer.write(newURL + "\n");
+				writer.flush();
+				
+				if(newURL.substring(8,12).equals("www."))
+				{
+					writer.write(newURL.substring(8) + "\n");
+					writer.flush();
+				}
+			}
+			else if(newURL.substring(0,7).equals("http://"))
+			{
+				writer.write(newURL + "\n");
+				writer.flush();
+				
+				if(newURL.substring(7,11).equals("www."))
+				{
+					writer.write(newURL.substring(7) + "\n");
+					writer.flush();
+				}
+			}
+			else if(newURL.substring(0,4).equals("www."))
+			{
+				writer.write("http://" + newURL + "\n");
+				writer.flush();
+				writer.write(newURL + "\n");
+				writer.flush();
+			}
+			else
+			{
+				writer.write("http://www." + newURL + "\n");
+				writer.flush();
+				writer.write("www." + newURL + "\n");
+				writer.flush();
+			}
 		}
 		catch(IOException e)
 		{
