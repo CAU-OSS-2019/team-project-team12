@@ -5,9 +5,12 @@ public class ChatProc {
 	private DataTable tb;
 	private ChatData ds;
 	private int KKcount;
+	private int MSGcount;
 	
 	public ChatProc()
 	{
+		this.KKcount = 0;
+		this.MSGcount = 0;
 		this.tb = new DataTable();
 	}
 	public DataTable getDataTable()
@@ -17,6 +20,11 @@ public class ChatProc {
 	
 	public void doProc(ChatData inputds)
 	{
+		if(MSGcount>100)
+		{
+			tb.Refresh();
+			MSGcount=0;
+		}
 		ds = inputds;
 		checkUser();
 		if(!checkSpamImoji())
@@ -33,6 +41,7 @@ public class ChatProc {
 		{
 			System.out.println("욕설임");
 		}
+		MSGcount++;
 	}
 	
 	private void checkUser()

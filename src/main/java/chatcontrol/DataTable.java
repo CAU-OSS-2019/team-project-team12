@@ -64,10 +64,11 @@ public class DataTable {
 			return null;
 		String newCommand = splitted_command[1];
 		String newAnswer = splitted_command[2];
-		customCommand.put(newCommand, newAnswer);
 
 	    if(customCommand.keySet().contains(command))
 	    	return null;
+	    
+	    customCommand.put(newCommand, newAnswer);
 	    
 		FileWriter writer = null;
 		File file = new File(getClass().getResource("/txt/CustomCommand.txt").getPath());
@@ -168,8 +169,7 @@ public class DataTable {
 				ret = false;
 			}
 		}
-		
-		this.SetBWTable();
+
 		return ret;
 	}
 	
@@ -259,8 +259,6 @@ public class DataTable {
 				ret = false;
 			}
 		}
-		
-		this.SetNamedList();
 		return ret;
 	}
 
@@ -328,6 +326,7 @@ public class DataTable {
 		if (index != -1) return false;
 		try
 		{
+			writer = new FileWriter(file,true);
 			if(newURL.substring(0, 8).equals("https://"))
 			{
 				writer.write(newURL + "\n");
@@ -382,7 +381,6 @@ public class DataTable {
 				ret = false;
 			}
 		}
-		this.SetSafeURLList();
 		return ret;
 	}
 	
@@ -431,4 +429,11 @@ public class DataTable {
 		return this.safeURLList;
 	}
 
+	public void Refresh()
+	{
+		this.SetBWTable();
+		this.SetCustomCommand();
+		this.SetNamedList();
+		this.SetSafeURLList();
+	}
 }
