@@ -90,7 +90,7 @@ public class LoginController implements Initializable {
     }
 
     private void executeGetAuthPythonScript(){
-        File sourceCode = new File("src/main/java/UI/java_get_auth_key1.py");
+        File sourceCode = new File("src/main/java/Youtube/java_get_auth_key1.py");
         String command = "cmd.exe /c python "+sourceCode.getAbsolutePath();
         System.out.println(command);
         try {
