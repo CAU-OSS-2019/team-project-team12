@@ -10,18 +10,97 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.HashMap;
 
 public class DataTable {
 	private static ArrayList<String>[] BWTable;
 	private static ArrayList<String> namedList;
 	private static ArrayList<String> myList;
 	private static ArrayList<String> safeURLList;
+	private static HashMap<String,String> customCommand;
 	
 	public DataTable() {
 		this.SetBWTable();
 		this.SetNamedList();
 		this.SetSafeURLList();
 		this.myList = new ArrayList<String>();
+		this.SetCustomCommand();
+	}
+	
+	public void SetCustomCommand()
+	{
+		this.customCommand = new HashMap<>();
+		
+		try
+		{
+			File file = new File(getClass().getResource("/txt/CustomCommand.txt").getPath());
+			FileReader filereader = new FileReader(file);
+			BufferedReader bufReader = new BufferedReader(filereader);
+			String line = "";
+			while((line=bufReader.readLine())!=null)
+			{
+				String[] splitted_line = line.split(" ");
+				if(splitted_line.length==2)
+				{
+					customCommand.put(splitted_line[0], splitted_line[1]);
+				}
+			}
+		}
+		catch (FileNotFoundException e)
+		{
+			System.out.println("CustomCommand file not found");
+	        // TODO: handle exception
+	    }
+		catch(IOException e)
+		{
+	        System.out.println(e);
+	    }
+	}
+	
+	public String AddToCustomCommand(String command)
+	{
+		String[] splitted_command = command.split(" ");
+		if (splitted_command.length != 3)
+			return null;
+		String newCommand = splitted_command[1];
+		String newAnswer = splitted_command[2];
+		customCommand.put(newCommand, newAnswer);
+
+	    if(customCommand.keySet().contains(command))
+	    	return null;
+	    
+		FileWriter writer = null;
+		File file = new File(getClass().getResource("/txt/CustomCommand.txt").getPath());
+		try
+		{
+			writer = new FileWriter(file, true);
+			writer.write(newCommand + " " + newAnswer + "\n");
+			writer.flush();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			newCommand = null;
+		}
+		finally
+		{
+			try
+			{
+				if(writer != null) writer.close();
+			}
+			catch(IOException e)
+			{
+				e.printStackTrace();
+				newCommand = null;
+			}
+		}
+		
+		return newCommand;
+	}
+	
+	public HashMap<String,String> getCustomCommand()
+	{
+		return this.customCommand;
 	}
 	
 	public void SetBWTable()

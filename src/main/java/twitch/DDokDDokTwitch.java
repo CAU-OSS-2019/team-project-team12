@@ -34,7 +34,6 @@ public class DDokDDokTwitch {
 	private static long bestKKtime; //for KK event
 	
 	public static class Listener {
-		private static HashMap<String, String> customCommand = new HashMap<>();
 		private Random random = new Random();
         @Handler
         public void onUserJoinChannel(ChannelJoinEvent event) {
@@ -93,7 +92,7 @@ public class DDokDDokTwitch {
 			}
 			else if (command.equals("목록")) {
 				String ret = "업타입, 목록, 주사위, 추가";
-				for (String custom: customCommand.keySet()) {
+				for (String custom: chatProc.getDataTable().getCustomCommand().keySet()) {
 					ret += ", " + custom;
 				}
 				event.sendReply(ret);
@@ -119,16 +118,14 @@ public class DDokDDokTwitch {
 			{
 				if(!event.getActor().getNick().equals(CHANNEL.replaceFirst("#","")))
 					return false;
-				String[] splitted_command = command.split(" ");
-				if (splitted_command.length != 3)
+				String newCommand = chatProc.getDataTable().AddToCustomCommand(command);
+				if (newCommand==null)
 					return false;
-				String newCommand = splitted_command[1];
-				String newAnswer = splitted_command[2];
-				customCommand.put(newCommand, newAnswer);
-				event.sendReply(newCommand +  " 명령어가 추가되었습니다!");
+				else
+					event.sendReply(newCommand +  " 명령어가 추가되었습니다!");
 			}
-			else if (customCommand.keySet().contains(command)){
-				event.sendReply(customCommand.get(command));
+			else if (chatProc.getDataTable().getCustomCommand().keySet().contains(command)){
+				event.sendReply(chatProc.getDataTable().getCustomCommand().get(command));
 			}
 			else {
 				return false;
