@@ -41,16 +41,14 @@ class ScheduledJob extends TimerTask{
     private JSONObject retjsn = null;
 
     public void run() {
-        File sourceCode = new File("src/main/java/Youtube/getLiveMessageList.py");
+        File sourceCode = new File("src/main/java/UI/getLiveMessageList.py");
         String command = "cmd.exe /c python " + sourceCode.getAbsolutePath();
         System.out.println(command);
-
         try {
             Process p = Runtime.getRuntime().exec(command);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         String jsn = "";
         try {
             File chatjsonfile = new File("chatdata.json");
@@ -115,6 +113,7 @@ class JsonParsingSchedule extends TimerTask{
     }
 
 }
+
 
 public class YoutubeController implements Initializable {
     //3Buttons, TableView initialize.
@@ -236,6 +235,7 @@ public class YoutubeController implements Initializable {
         }
         return retjsn;
     }
+
     private void executeBotPythonScript(){
         File sourceCode = new File("src/main/java/Youtube/bot.py");
         String command = "cmd.exe /c python "+sourceCode.getAbsolutePath();
@@ -304,7 +304,7 @@ public class YoutubeController implements Initializable {
         }
 
     }
-    
+
     public void banUser(ChatDataProperty selected) {
         if(false) {
             try {

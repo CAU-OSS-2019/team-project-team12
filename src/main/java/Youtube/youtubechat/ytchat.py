@@ -75,7 +75,7 @@ def get_live_chat_id_for_stream_now(credential_file):
     params = {'part': 'snippet', 'default': 'true'}
     params = urlencode(params)
     resp, data = _json_request(http, url + params)
-   
+
     return data['items'][0]['snippet']['liveChatId']
 
 
@@ -358,13 +358,13 @@ class LiveChatApi(object):
         self.logger = logging.getLogger("liveChat_api")
 
     def get_all_messages(self, livechatId):
-        data = self.LiveChatMessages_list(livechatId, maxResults=2000)
+        data = self.live_chat_messages_list(livechatId, maxResults=2000)
         total_items = data['pageInfo']['totalResults']
         pageToken = data['nextPageToken']
         if len(data['items']) < total_items:
             time.sleep(data['pollingIntervalMillis'] / 1000)
             while len(data['items']) < total_items:
-                other_data = self.LiveChatMessages_list(livechatId, maxResults=2000, pageToken=pageToken)
+                other_data = self.live_chat_messages_list(livechatId, maxResults=2000, pageToken=pageToken)
                 if not other_data['items']:
                     break
                 else:

@@ -2,6 +2,7 @@
 
 from time import sleep
 import sys
+import json
 from youtubechat import YoutubeLiveChat, get_live_chat_id_for_broadcast_id, get_live_chat_id_for_stream_now
 
 
@@ -18,5 +19,8 @@ print(livechat_id)
 
 chat_obj = YoutubeLiveChat(FILE_PATH+"oauth_creds", [livechat_id])
 f = open(FILE_PATH+"chatdata.json","w")
-f.write(chat_obj.livechat_api.get_all_messages(livechat_id))
+
+dataaa = chat_obj.livechat_api.get_all_messages(livechat_id)
+dataaa = json.dumps(dataaa)
+f.write(dataaa)
 f.close()
