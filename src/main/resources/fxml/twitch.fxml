@@ -66,7 +66,5 @@
          </content>
       </ScrollPane>
       <Label layoutX="601.0" layoutY="14.0" prefHeight="19.0" prefWidth="404.0" text="아래의 목록을 통해 현재 시청중인 스트리머를 확인할 수 있습니다." textFill="WHITE" />
-      <Button fx:id="timeOutButton" layoutX="17.0" layoutY="435.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="108.0" text="타임아웃" />
-      <Button fx:id="banButton" layoutX="17.0" layoutY="350.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="108.0" text="밴" />
 	</children>
 </AnchorPane>

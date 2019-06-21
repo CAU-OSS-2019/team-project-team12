@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="220.0" prefWidth="398.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.BanBoxController">
+   <children>
+      <Label layoutX="29.0" layoutY="71.0" prefHeight="45.0" prefWidth="361.0" text="밴 또는 타임아웃을 선택할 수 있습니다.">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="banButton" layoutX="14.0" layoutY="145.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="110.0" text="밴" />
+      <Label fx:id="userLabel" layoutX="29.0" layoutY="36.0" prefHeight="45.0" prefWidth="361.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button fx:id="closeButton" layoutX="280.0" layoutY="145.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="110.0" text="닫기" />
+      <Button fx:id="timeOutButton" layoutX="144.0" layoutY="145.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="110.0" text="타임아웃" />
+   </children>
+</AnchorPane>
