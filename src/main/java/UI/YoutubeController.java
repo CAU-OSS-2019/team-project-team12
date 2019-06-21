@@ -20,6 +20,8 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import chatcontrol.ChatData;
+
 public class YoutubeController implements Initializable {
     //3Buttons, TableView initialize.
     @FXML
@@ -68,7 +70,7 @@ public class YoutubeController implements Initializable {
     }
 
     private void executeBotPythonScript(){
-        File sourceCode = new File("src/main/java/UI/bot.py");
+        File sourceCode = new File("src/main/java/Youtube/bot.py");
         String command = "cmd.exe /c python "+sourceCode.getAbsolutePath();
         System.out.println(command);
         try {
@@ -78,11 +80,11 @@ public class YoutubeController implements Initializable {
         }
     }
 
-    /*
+
     public void addList(ChatData element) {
-        youtubeTable.getItems().add(new ChatDataProperty(element);
+        youtubeTable.getItems().add(new ChatDataProperty(element));
     }
-    */
+
 
     // show keywords window.
     public void keywordsWindow(){

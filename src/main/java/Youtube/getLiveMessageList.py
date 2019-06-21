@@ -6,7 +6,7 @@ from youtubechat import YoutubeLiveChat, get_live_chat_id_for_broadcast_id, get_
 
 
 #Input FilePath of "oauth_creds", "broadcastid"
-FILE_PATH = 'D:/@University/4-1/OSS/team-project-team12/'
+FILE_PATH = 'D:/@University/team-12-final/'
 
 f = open(FILE_PATH+"broadcastid","r")
 
