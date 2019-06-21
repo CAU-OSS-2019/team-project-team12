@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -34,6 +35,7 @@ public class DDokDDokTwitch {
 	
 	public static class Listener {
 		private static HashMap<String, String> customCommand = new HashMap<>();
+		private Random random = new Random();
         @Handler
         public void onUserJoinChannel(ChannelJoinEvent event) {
         	if (chatProc.checkUser(event.getActor().getName())) {
@@ -88,6 +90,30 @@ public class DDokDDokTwitch {
 				String uptimeString = String.format("%02d시간 %02d분 %02d초",
 						seconds / 3600, (seconds % 3600) / 60, seconds % 60);
 				event.sendReply(uptimeString);
+			}
+			else if (command.equals("목록")) {
+				String ret = "업타입, 목록, 주사위, 추가";
+				for (String custom: customCommand.keySet()) {
+					ret += ", " + custom;
+				}
+				event.sendReply(ret);
+			}
+			else if (command.substring(0,3).equals("주사위")) {
+				String[] splitted_command = command.split(" ");
+				int sides = 6;
+				if (splitted_command.length == 2) {
+					try{
+						sides = Integer.valueOf(splitted_command[1]);
+					}
+					catch (Exception e) { //If second value is not integer
+						return false;
+					}
+				}
+				else if (splitted_command.length > 2) {
+					return false;
+				}
+				String ret = String.valueOf(random.nextInt(sides) + 1);
+				event.sendReply("주사위에서 " + ret + "이 나왔습니다!");
 			}
 			else if (command.substring(0, 2).equals("추가"))
 			{
