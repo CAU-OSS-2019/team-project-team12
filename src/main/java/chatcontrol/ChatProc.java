@@ -4,6 +4,7 @@ public class ChatProc {
 
 	private DataTable tb;
 	private ChatData ds;
+	private int KKcount;
 	
 	public ChatProc()
 	{
@@ -61,6 +62,15 @@ public class ChatProc {
 		}
 		return false;
 	}
+	private void countK()
+	{
+		KKcount++;
+		if(KKcount>=500)
+		{
+			ds.setKKevent(true);
+			KKcount=0;
+		}
+	}
 	
 	private void checkBadword()
 	{
@@ -68,6 +78,10 @@ public class ChatProc {
 		
 		for(int i=0; i<ds.getChatText().length(); i++) //repeat for input string size times
 		{
+			if(ds.getChatText().charAt(i)=='ㅋ')
+			{
+				countK();
+			}
 			if(tb.getBWTable()[(int)(ds.getChatText().charAt(i))].size()!=0) //Is there a bad word which have input(i) for first character?
 			{
 				for(int j=0; j<tb.getBWTable()[(int)(ds.getChatText().charAt(i))].size(); j++) // repeat for Table[input(i)]'s size times
