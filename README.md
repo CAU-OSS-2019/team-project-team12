@@ -35,6 +35,17 @@
 * Release용으로 combine 하기 전의 독자적인 Python Module은 아래의 링크에서 보실 수 있습니다.
 * [DDokDDok Livestreaming Python Module](https://github.com/cauchatbot/Youtube)
 
+## DDokDDok Youtube Module이 지원하는 기능들
+* 시청자가 입력한 !<명령> 에 반응하는 Chatbot입니다.
+* 기본적으로 !업타임 명령어가 탑재되어 있습니다.
+* 현재 !주사위, !추가, !업타임, !앵무새, 따라웃기, 채팅 로그 기능이 탑재되어 있습니다.
+* !주사위 : 무작위 수를 출력해줍니다.
+* !추가 : !추가 <!추가할명령> <BOT이출력할 문장> 으로 사용할 수 있으며, 추가한 명령은 따로 txt파일로 관리됩니다.
+* !삭제 : !삭제 <!삭제할명령> 으로 사용할 수 있으며, 존재하지 않거나 삭제된 명령은 삭제할 수 없습니다.
+* !업타임 : 방송을 시작하고 시간이 얼마나 지났는지 출력해줍니다.
+* 따라웃기기능 : 시청자가 일정 규모 이상으로 웃으면 bot도 따라서 웃습니다.
+* 채팅로그 기능 : bot을 실행한 이후 종료시까지 chat log를 작성해줍니다.
+
 ## 이 Release Version은 Windows 용입니다.
  * Youtube 기능을 사용하실때에는, 위에 게시된 DDokDDok Python Module의 README를 반드시 읽어주셔야 동작합니다.
  * 봇을 사용하기 전, `.../src/main/java/Youtube`에 위치한 `java_get_auth_key1.py`와 `bot.py`의 `FILE_PATH`를 반드시 변경하여주십시오.
