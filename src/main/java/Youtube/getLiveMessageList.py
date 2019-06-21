@@ -3,8 +3,11 @@
 from time import sleep
 import sys
 import json
+import re
+
 from youtubechat import YoutubeLiveChat, get_live_chat_id_for_broadcast_id, get_live_chat_id_for_stream_now
 
+getStringWithDecodedUnicode = lambda str : re.sub( '\\\\u([\da-f]{4})', (lambda x : chr( int( x.group(1), 16 ) )), str )
 
 #Input FilePath of "oauth_creds", "broadcastid"
 FILE_PATH = 'D:/@University/team-12-final/'
