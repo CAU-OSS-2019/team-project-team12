@@ -124,3 +124,10 @@ buildNumber.properties
 
 ### JSON ###
 *.json
+
+### CREDITRELATED ###
+oauth_creds
+broadcastid
+authcode
+
+### ETC ###

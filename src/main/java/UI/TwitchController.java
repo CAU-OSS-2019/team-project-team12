@@ -24,11 +24,15 @@ import twitch.DDokDDokTwitch;
 public class TwitchController implements Initializable {
     //3Buttons, TableView initialize.
     @FXML
-    private Button keywords, urls, streamers;
+    private Button keywords, urls, streamers, banButton, timeOutButton;
     @FXML
     private TableView<ChatDataProperty> twitchTable;
     @FXML
     private TableColumn<ChatDataProperty, String> userID, nickName, chat, status;
+    @FXML
+    private TableView<ChatDataProperty> streamersTable;
+    @FXML
+    private TableColumn<ChatDataProperty, String> streamerNmae, streamerChat;
     
     private DDokDDokTwitch ddokddok;
     private String UserName;
@@ -45,9 +49,13 @@ public class TwitchController implements Initializable {
         keywords.setOnAction(event -> keywordsWindow());
         urls.setOnAction(event -> urlsWindow());
         streamers.setOnAction(event->streamersWindow());
-        twitchTable.setOnMouseClicked(event -> {
+        banButton.setOnMouseClicked(event -> {
             ChatDataProperty selected = twitchTable.getSelectionModel().getSelectedItem();
             banUser(selected);
+        });
+        timeOutButton.setOnMouseClicked(event -> {
+            ChatDataProperty selected = twitchTable.getSelectionModel().getSelectedItem();
+            timeOutUser(selected);
         });
     }
     public void setUserName(String UserName) {
@@ -62,8 +70,8 @@ public class TwitchController implements Initializable {
     // show keywords window.
     public void keywordsWindow(){
         try {
-        	URL url = getClass().getResource("/txt/keywords.txt");
-            Desktop.getDesktop().edit(new File(url.getPath()));
+        	/*URL url = getClass().getResource("/txt/keywords.txt");
+            Desktop.getDesktop().edit(new File(url.getPath()));*/
             Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/keywords.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
@@ -79,8 +87,8 @@ public class TwitchController implements Initializable {
     // show urls window.
     public void urlsWindow(){
         try {
-        	URL url = getClass().getResource("/txt/urls.txt");
-            Desktop.getDesktop().edit(new File(url.getPath()));
+        	/*URL url = getClass().getResource("/txt/urls.txt");
+            Desktop.getDesktop().edit(new File(url.getPath()));*/
             Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/urls.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
@@ -96,8 +104,8 @@ public class TwitchController implements Initializable {
     //show streamers window.
     public void streamersWindow(){
         try {
-        	URL url = getClass().getResource("/txt/streamers.txt");
-            Desktop.getDesktop().edit(new File(url.getPath()));
+        	/*URL url = getClass().getResource("/txt/streamers.txt");
+            Desktop.getDesktop().edit(new File(url.getPath()));*/
             Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/streamers.fxml"));
             Scene newScene = new Scene(newPane);
             Stage newStage = new Stage();
@@ -122,6 +130,22 @@ public class TwitchController implements Initializable {
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
+
+        twitchTable.getSelectionModel().clearSelection();
+        twitchTable.getItems().remove(selected);
+    }
+    public void timeOutUser(ChatDataProperty selected) {
+        //ddokddok.timeOutUser(selected.getUserID().getValue());
+        try {
+            Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputSuccess.fxml"));
+            Scene newScene = new Scene(newPane);
+            Stage newStage = new Stage();
+            newStage.setScene(newScene);
+            newStage.setTitle(selected.getUserNickName().getValue() + " was banned");
+            newStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         twitchTable.getSelectionModel().clearSelection();
         twitchTable.getItems().remove(selected);

@@ -56,48 +56,52 @@ public class DataTable {
 	        System.out.println(e);
 	    }
 	}
-	public void AddToBWTable(String newWord)
+	public boolean AddToBWTable(String newWord)
 	{
+		boolean ret = true;
 		FileWriter writer = null;
 		File file = new File(getClass().getResource("/txt/BADWORD.txt").getPath());
 		
+		System.out.println(newWord);
+		
 	    int index = BWTable[newWord.charAt(0)].indexOf(newWord);
-	   	if(index == -1)
-	   	{
+	    if (index != -1) return false;
+		try
+		{
+			writer = new FileWriter(file, true);
+			writer.write(newWord + "\n");
+			writer.flush();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			ret = false;
+		}
+		finally
+		{
 			try
 			{
-				writer = new FileWriter(file, true);
-				writer.write(newWord + "\n");
-				writer.flush();
+				if(writer != null) writer.close();
 			}
 			catch(IOException e)
 			{
 				e.printStackTrace();
-			}
-			finally
-			{
-				try
-				{
-					if(writer != null) writer.close();
-				}
-				catch(IOException e)
-				{
-					e.printStackTrace();
-				}
+				ret = false;
 			}
 		}
+		
 		this.SetBWTable();
+		return ret;
 	}
 	
-	public void DeleteFromBWTable(String deleteWord)
+	public boolean DeleteFromBWTable(String deleteWord)
 	{
+		boolean ret = true;
 		File file = new File(getClass().getResource("/txt/BADWORD.txt").getPath());
 		
 		int index = BWTable[(int)(deleteWord.charAt(0))].indexOf(deleteWord);
-		if(index != -1)
-    	{
-			BWTable[(int)(deleteWord.charAt(0))].remove(deleteWord);	
-		}
+		if (index == -1) return false;
+		BWTable[(int)(deleteWord.charAt(0))].remove(deleteWord);	
 		try
 		{
 			BufferedWriter writer = new BufferedWriter(new FileWriter(file));
@@ -114,7 +118,9 @@ public class DataTable {
 		}
 		catch(IOException e)
 		{
+			ret = false;
 		}		
+		return ret;
 	}
 	
 	public void SetNamedList()
@@ -143,47 +149,51 @@ public class DataTable {
 	    }
 	}
 
-	public void AddToNamedList(String newUser)
+	public boolean AddToNamedList(String newUser)
 	{
+		boolean ret = true;
 		File file = new File(getClass().getResource("/txt/NAMED.txt").getPath());
 		FileWriter writer = null;
 		int index = namedList.indexOf(newUser);
-	    if(index == -1)
-	    {
+		if (index != -1) return false;
+	    
+		try
+		{
+			writer = new FileWriter(file, true);
+			writer.write(newUser + "\n");
+			writer.flush();
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			ret = false;
+		}
+		finally
+		{
 			try
 			{
-				writer = new FileWriter(file, true);
-				writer.write(newUser + "\n");
-				writer.flush();
+				if(writer != null) writer.close();
 			}
 			catch(IOException e)
 			{
 				e.printStackTrace();
-			}
-			finally
-			{
-				try
-				{
-					if(writer != null) writer.close();
-				}
-				catch(IOException e)
-				{
-					e.printStackTrace();
-				}
+				ret = false;
 			}
 		}
+		
 		this.SetNamedList();
+		return ret;
 	}
 
-	public void DeleteFromNamedList(String deleteUser)
+	public boolean DeleteFromNamedList(String deleteUser)
 	{
+		boolean ret = true;
 		File file = new File(getClass().getResource("/txt/NAMED.txt").getPath());
 		
 	    int index = namedList.indexOf(deleteUser);
-	    if(index != -1)
-	    {
-			namedList.remove(deleteUser);	
-		}
+	    if (index == -1) return false;
+	    
+		namedList.remove(deleteUser);
 	    
 		try
 		{
@@ -199,7 +209,9 @@ public class DataTable {
 		}
 		catch(IOException e)
 		{
+			ret = false;
 		}		
+		return ret;
 	}
 	public void SetSafeURLList()
 	{
@@ -227,49 +239,83 @@ public class DataTable {
 	    }
 	}
 
-	public void AddToURLList(String newURL)
+	public boolean AddToURLList(String newURL)
 	{
+		boolean ret = true;
 		File file = new File(getClass().getResource("/txt/URL.txt").getPath());
 		FileWriter writer = null;
 	
 		int index = safeURLList.indexOf(newURL);
-	    if(index == -1)
-	    {
-			try
+		if (index != -1) return false;
+		try
+		{
+			if(newURL.substring(0, 8).equals("https://"))
 			{
-				writer = new FileWriter(file, true);
 				writer.write(newURL + "\n");
 				writer.flush();
+				
+				if(newURL.substring(8,12).equals("www."))
+				{
+					writer.write(newURL.substring(8) + "\n");
+					writer.flush();
+				}
+			}
+			else if(newURL.substring(0,7).equals("http://"))
+			{
+				writer.write(newURL + "\n");
+				writer.flush();
+				
+				if(newURL.substring(7,11).equals("www."))
+				{
+					writer.write(newURL.substring(7) + "\n");
+					writer.flush();
+				}
+			}
+			else if(newURL.substring(0,4).equals("www."))
+			{
+				writer.write("http://" + newURL + "\n");
+				writer.flush();
+				writer.write(newURL + "\n");
+				writer.flush();
+			}
+			else
+			{
+				writer.write("http://www." + newURL + "\n");
+				writer.flush();
+				writer.write("www." + newURL + "\n");
+				writer.flush();
+			}
+		}
+		catch(IOException e)
+		{
+			e.printStackTrace();
+			ret =  false;
+		}
+		finally
+		{
+			try
+			{
+				if(writer != null) writer.close();
 			}
 			catch(IOException e)
 			{
 				e.printStackTrace();
+				ret = false;
 			}
-			finally
-			{
-				try
-				{
-					if(writer != null) writer.close();
-				}
-				catch(IOException e)
-				{
-					e.printStackTrace();
-				}
-			}
-	    }
+		}
 		this.SetSafeURLList();
+		return ret;
 	}
 	
-	public void DeleteFromURLList(String deleteURL)
+	public boolean DeleteFromURLList(String deleteURL)
 	{
+		boolean ret = true;
 		File file = new File(getClass().getResource("/txt/URL.txt").getPath());
 		
 
 	    int index = safeURLList.indexOf(deleteURL);
-	    if(index != -1)
-	    {
-			safeURLList.remove(deleteURL);	
-		}
+	    if (index == -1) return false;
+		safeURLList.remove(deleteURL);	
 		
 		try
 		{
@@ -284,7 +330,9 @@ public class DataTable {
 		}
 		catch(IOException e)
 		{
+			ret = false;
 		}	
+		return ret;
 	}
 	
 	public ArrayList<String>[] getBWTable()

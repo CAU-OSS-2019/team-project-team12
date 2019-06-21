@@ -2,25 +2,9 @@ package UI;
 
 import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.*;
-
-//Seongmin Java Scheduler
-
-//Seongmin JSON Parser
-import chatcontrol.ChatProc;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import chatcontrol.ChatData;
-import chatcontrol.ChatProc;
+import java.util.ResourceBundle;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -36,110 +20,22 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-
-class ScheduledJob extends TimerTask{
-    private JSONObject retjsn = null;
-
-    public void run() {
-        File sourceCode = new File("src/main/java/Youtube/getLiveMessageList.py");
-        String command = "cmd.exe /c python " + sourceCode.getAbsolutePath();
-        System.out.println(command);
-        try {
-            Process p = Runtime.getRuntime().exec(command);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        String jsn = "";
-        try {
-            File chatjsonfile = new File("chatdata.json");
-            FileReader file_reader = new FileReader(chatjsonfile);
-            int cur = 0;
-            while((cur = file_reader.read())!=-1) {
-                jsn = jsn + (char)cur;
-            }
-            file_reader.close();
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        try {
-            JSONParser parser = new JSONParser();
-            JSONObject object = (JSONObject) parser.parse(jsn);
-            this.retjsn = object;
-        }catch(ParseException e){
-            e.printStackTrace();
-        }
-    }
-
-    public JSONObject getJSONFile(){
-        if(retjsn != null) {
-            return this.retjsn;
-        }
-        else{
-            return null;
-        }
-    }
-}
-
-class JsonParsingSchedule extends TimerTask{
-    JSONObject jsn;
-    ArrayList<ChatData> ch;
-
-    JsonParsingSchedule(JSONObject j, ArrayList<ChatData> ch){
-        this.jsn =(JSONObject) j;
-        this.ch = ch;
-    }
-
-    public void run() {
-        //유저아이디, 닉네임, 챗 텍스트, 채널아이디, 라이브챗아이디
-        if(jsn==null){return;}
-        JSONArray items = (JSONArray) jsn.get("items");
-
-        for(int i = 0; i< items.size(); i++){
-            JSONObject res = (JSONObject) items.get(i);
-            JSONObject authorDetails = (JSONObject) res.get("authorDetails");
-            JSONObject snippet = (JSONObject) res.get("snippet");
-            String liveChatID = (String) snippet.get("liveChatId");
-            String message= (String) snippet.get("displayMessage");
-            String userNick = (String) authorDetails.get("displayName");
-            String channelID = (String) authorDetails.get("channelId");
-            String authorChannelId = (String) snippet.get("authorChannelId");
-
-            ChatData tmp = new ChatData(authorChannelId,userNick,message,channelID,liveChatID);
-            ch.add(tmp);
-        }
-
-    }
-
-}
-
-
 public class YoutubeController implements Initializable {
     //3Buttons, TableView initialize.
     @FXML
-    private Button keywords;
-    @FXML
-    private Button urls;
-    @FXML
-    private Button streamers;
+    private Button keywords, urls, streamers, banButton, timeOutButton;
     @FXML
     private TableView<ChatDataProperty> youtubeTable;
     @FXML
-    private TableColumn<ChatDataProperty, String> userID;
+    private TableColumn<ChatDataProperty, String> userID, nickName, chat, status;
     @FXML
-    private TableColumn<ChatDataProperty, String> nickName;
+    private TableView<ChatDataProperty> youtubers;
     @FXML
-    private TableColumn<ChatDataProperty, String> chat;
-    @FXML
-    private TableColumn<ChatDataProperty, String> status;
+    private TableColumn<ChatDataProperty, String> youtuberName, youtuberChat;
 
     //initialize table contents, button actions.
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ChatProc proc =new ChatProc();
-        ArrayList<ChatData> localChatdataArrayList = new ArrayList<ChatData>();
-        JSONObject localJsonObj = readJson();
 
         ObservableList<ChatDataProperty> myList = FXCollections.observableArrayList(
 
@@ -156,84 +52,23 @@ public class YoutubeController implements Initializable {
         urls.setOnAction(event -> urlsWindow());
         streamers.setOnAction(event->streamersWindow());
 
-        youtubeTable.setOnMouseClicked(event -> {
+        banButton.setOnMouseClicked(event -> {
             ChatDataProperty selected = youtubeTable.getSelectionModel().getSelectedItem();
             banUser(selected);
         });
 
-        ScheduledJob job = new ScheduledJob();
-        Timer jobScheduler = new Timer();
-        //After 5000ms pass, run jsonparser
-        jobScheduler.scheduleAtFixedRate(job, 1000, 5000);
+        timeOutButton.setOnMouseClicked(event -> {
+            ChatDataProperty selected = youtubeTable.getSelectionModel().getSelectedItem();
+            timeOutUser(selected);
+        });
 
-        JsonParsingSchedule parseAndAddJob = new JsonParsingSchedule(localJsonObj, localChatdataArrayList);
-        Timer parseAndAddScheduler = new Timer();
-        //After 6000ms pass, run
-        parseAndAddScheduler.scheduleAtFixedRate(parseAndAddJob,1000,6000);
-        ArrayList<ChatDataProperty> updateChatProp = makeChatData(localJsonObj);
 
-        for(int i =0;i<updateChatProp.size();i++){
-            myList.add(updateChatProp.get(i));
-        }
         //Execute Python bot.py
         executeBotPythonScript();
     }
-    private ArrayList<ChatDataProperty> makeChatData(JSONObject jsn) {
-        ChatProc chatProc = new ChatProc();
-        //유저아이디, 닉네임, 챗 텍스트, 채널아이디, 라이브챗아이디
-        ArrayList<ChatData> ch = new ArrayList<ChatData>();
-        ArrayList<ChatDataProperty> chatprop = new ArrayList<ChatDataProperty>();
-        if (jsn == null) {
-            return null;
-        }
-        JSONArray items = (JSONArray) jsn.get("items");
 
-        for (int i = 0; i < items.size(); i++) {
-            JSONObject res = (JSONObject) items.get(i);
-            JSONObject authorDetails = (JSONObject) res.get("authorDetails");
-            JSONObject snippet = (JSONObject) res.get("snippet");
-            String liveChatID = (String) snippet.get("liveChatId");
-            String message = (String) snippet.get("displayMessage");
-            String userNick = (String) authorDetails.get("displayName");
-            String channelID = (String) authorDetails.get("channelId");
-            String authorChannelId = (String) snippet.get("authorChannelId");
-
-            ChatData tmp = new ChatData(authorChannelId, userNick, message, channelID, liveChatID);
-            ch.add(tmp);
-        }
-        for(int i=0;i<ch.size();i++){
-            chatProc.doProc(ch.get(i));
-            chatprop.add(new ChatDataProperty(ch.get(i)));
-        }
-        return chatprop;
-    }
-    private JSONObject readJson(){
-        JSONObject retjsn = new JSONObject();
-        String jsn = "";
-        try {
-            File chatjsonfile = new File("chatdata.json");
-            FileReader file_reader = new FileReader(chatjsonfile);
-            int cur = 0;
-            while((cur = file_reader.read())!=-1) {
-                jsn = jsn + (char)cur;
-            }
-            file_reader.close();
-        }catch (FileNotFoundException e){
-            e.printStackTrace();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        try {
-            JSONParser parser = new JSONParser();
-            JSONObject object = (JSONObject) parser.parse(jsn);
-            retjsn = object;
-        }catch(ParseException e){
-            e.printStackTrace();
-        }
-        return retjsn;
-    }
     private void executeBotPythonScript(){
-        File sourceCode = new File("src/main/java/Youtube/bot.py");
+        File sourceCode = new File("src/main/java/UI/bot.py");
         String command = "cmd.exe /c python "+sourceCode.getAbsolutePath();
         System.out.println(command);
         try {
@@ -323,6 +158,35 @@ public class YoutubeController implements Initializable {
                 Stage newStage = new Stage();
                 newStage.setScene(newScene);
                 newStage.setTitle("Ban " + selected.getUserNickName().getValue() + " failed");
+                newStage.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public void timeOutUser(ChatDataProperty selected) {
+        if(true) {
+            try {
+                Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputSuccess.fxml"));
+                Scene newScene = new Scene(newPane);
+                Stage newStage = new Stage();
+                newStage.setScene(newScene);
+                newStage.setTitle(selected.getUserNickName().getValue() + " time-out successful.");
+                newStage.show();
+                youtubeTable.getSelectionModel().clearSelection();
+                youtubeTable.getItems().remove(selected);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        else {
+            try {
+                Pane newPane = FXMLLoader.load(getClass().getResource("/fxml/inputFail.fxml"));
+                Scene newScene = new Scene(newPane);
+                Stage newStage = new Stage();
+                newStage.setScene(newScene);
+                newStage.setTitle("Time-out " + selected.getUserNickName().getValue() + " failed");
                 newStage.show();
             } catch (IOException ex) {
                 ex.printStackTrace();

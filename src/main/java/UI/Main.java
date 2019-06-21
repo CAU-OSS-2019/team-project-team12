@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import twitch.DDokDDokTwitch;
 
 public class Main extends Application {
 
@@ -19,7 +20,10 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
-
+    @Override
+    public void stop() {
+    	DDokDDokTwitch.disconnect();
+    }
     public static void main(String[] args) {
         launch(args);
     }

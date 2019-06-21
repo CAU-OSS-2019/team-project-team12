@@ -8,11 +8,11 @@
     <artifactId>UI02</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-	<properties>
-		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
-	</properties>
-    
+    <properties>
+        <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -40,17 +40,17 @@
             <artifactId>javafx-fxml</artifactId>
             <version>11.0.1</version>
         </dependency>
-	    <!-- https://mvnrepository.com/artifact/org.json/json -->
-		<dependency>
-	    	<groupId>org.json</groupId>
-	    	<artifactId>json</artifactId>
-	    	<version>20180813</version>
-		</dependency>
-		<dependency>
-	    	<groupId>org.kitteh.irc</groupId>
-	    	<artifactId>client-lib</artifactId>
-	    	<version>7.1.0</version>
-		</dependency>
+        <!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20180813</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kitteh.irc</groupId>
+            <artifactId>client-lib</artifactId>
+            <version>7.1.0</version>
+        </dependency>
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
