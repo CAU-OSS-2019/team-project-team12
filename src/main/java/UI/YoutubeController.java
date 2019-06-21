@@ -82,7 +82,7 @@ public class YoutubeController implements Initializable {
 
 
     public void addList(ChatData element) {
-        youtubeTable.getItems().add(new ChatDataProperty(element);
+        youtubeTable.getItems().add(new ChatDataProperty(element));
     }
 
 
