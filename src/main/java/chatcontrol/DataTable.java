@@ -11,8 +11,287 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
 import java.util.HashMap;
+import java.io.Serializable;
+
+public class BWTable implements Serializable{
+	private static ArrayList<String> BWTable;
+	DataTable.getBWTable();
+
+	String path = getClass().getResource("/dat/BADWORD.dat").getPath();
+	ObjectOutputStream objOut = null;
+    FileOutputStream fileOut = null;
+
+	try{
+		fileOut = new FileOutputStream(path);
+		objOut = new ObjectOutputStream (fileOut);
+		objOut.writeObject(data);
+	}finally{
+		if (objOut!=null){
+		objOut.close();
+	}
+	else if (fileOut!=null){
+		fileOut.close();
+	}	
+
+
+	public void LoadDataTable(){
+		ObjectInputStream objInputStream = null;
+		FileInputStream inputStream = null;
+		try{
+			inputStream = new FileInputStream(getClass().getResource("/dat/BADWORD.dat").getPath());
+			objInputStream = new ObjectInputStream (inputStream);
+ 
+			DataTable data = (DataTable)objInputStream.readObject();
+			objInputStream.close();
+ 
+		} catch (FileNotFoundException e) {
+			DataTable.SetBWTable();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally{
+			if (objInputStream != null){
+				try{objInputStream.close();}catch (Exception e){}
+			}
+			else if (inputStream != null){
+				try{inputStream.close();}catch (Exception e){}
+			}
+		}
+	}
+
+	public void SaveDataTable(){
+		DataTable data = new DataTable();
+		data.setName ("BADWORD");
+
+		String path = getClass().getResource("/dat/BADWORD.dat").getPath();
+ 
+		ObjectOutputStream objOut = null;
+		FileOutputStream fileOut = null;
+		try{
+			fileOut = new FileOutputStream(path);
+			objOut = new ObjectOutputStream (fileOut);
+			objOut.writeObject(data);
+		}finally{
+			if (objOut!=null){
+				objOut.close();
+			}
+			else if (fileOut!=null){
+				fileOut.close();
+			}
+		}
+	}
+}
+
+public class namedList implements Serializable{
+	private static ArrayList<String> namedList;
+	DataTable.getnamedList();
+
+	String path = getClass().getResource("/dat/NAMED.dat").getPath();
+	ObjectOutputStream objOut = null;
+    FileOutputStream fileOut = null;
+
+	try{
+		fileOut = new FileOutputStream(path);
+		objOut = new ObjectOutputStream (fileOut);
+		objOut.writeObject(data);
+	}finally{
+		if (objOut!=null){
+		objOut.close();
+	}
+	else if (fileOut!=null){
+		fileOut.close();
+	}
+
+	public void LoadDataTable(){
+		ObjectInputStream objInputStream = null;
+		FileInputStream inputStream = null;
+		try{
+			inputStream = new FileInputStream(getClass().getResource("/dat/NAMED.dat").getPath());
+			objInputStream = new ObjectInputStream (inputStream);
+ 
+			DataTable data = (DataTable)objInputStream.readObject();
+			objInputStream.close();
+ 
+		} catch (FileNotFoundException e) {
+			DataTable.SetNamedList();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally{
+			if (objInputStream != null){
+				try{objInputStream.close();}catch (Exception e){}
+			}
+			else if (inputStream != null){
+				try{inputStream.close();}catch (Exception e){}
+			}
+		}
+	}
+
+	public void SaveDataTable(){
+		DataTable data = new DataTable();
+		data.setName ("NAMED");
+
+		String path = getClass().getResource("/dat/NAMED.dat").getPath();
+ 
+		ObjectOutputStream objOut = null;
+		FileOutputStream fileOut = null;
+		try{
+			fileOut = new FileOutputStream(path);
+			objOut = new ObjectOutputStream (fileOut);
+			objOut.writeObject(data);
+		}finally{
+			if (objOut!=null){
+				objOut.close();
+			}
+			else if (fileOut!=null){
+				fileOut.close();
+			}
+		}
+	}
+}
+
+public class safeURLList implements Serializable{
+	private static ArrayList<String> safeURLList;
+	DataTable.getSafeURLList();
+
+	String path = getClass().getResource("/dat/URL.dat").getPath();
+	ObjectOutputStream objOut = null;
+    FileOutputStream fileOut = null;
+
+	try{
+		fileOut = new FileOutputStream(path);
+		objOut = new ObjectOutputStream (fileOut);
+		objOut.writeObject(data);
+	}finally{
+		if (objOut!=null){
+		objOut.close();
+	}
+	else if (fileOut!=null){
+		fileOut.close();
+	}
+
+	public void LoadDataTable(){
+		ObjectInputStream objInputStream = null;
+		FileInputStream inputStream = null;
+		try{
+			inputStream = new FileInputStream(getClass().getResource("/dat/URL.dat").getPath());
+			objInputStream = new ObjectInputStream (inputStream);
+ 
+			DataTable data = (DataTable)objInputStream.readObject();
+			objInputStream.close();
+ 
+		} catch (FileNotFoundException e) {
+			DataTable.SetSafeURLList();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally{
+			if (objInputStream != null){
+				try{objInputStream.close();}catch (Exception e){}
+			}
+			else if (inputStream != null){
+				try{inputStream.close();}catch (Exception e){}
+			}
+		}
+	}
+
+	public void SaveDataTable(){
+		DataTable data = new DataTable();
+		data.setName ("URL");
+
+		String path = getClass().getResource("/dat/URL.dat").getPath();
+ 
+		ObjectOutputStream objOut = null;
+		FileOutputStream fileOut = null;
+		try{
+			fileOut = new FileOutputStream(path);
+			objOut = new ObjectOutputStream (fileOut);
+			objOut.writeObject(data);
+		}finally{
+			if (objOut!=null){
+				objOut.close();
+			}
+			else if (fileOut!=null){
+				fileOut.close();
+			}
+		}
+	}
+}
+
+public class customCommand implements Serializable{
+	private static HashMap<String,String> customCommand;
+	DataTable.getCustomCommand();
+
+	String path = getClass().getResource("/dat/CustomCommand.dat").getPath();
+	ObjectOutputStream objOut = null;
+    FileOutputStream fileOut = null;
+
+	try{
+		fileOut = new FileOutputStream(path);
+		objOut = new ObjectOutputStream (fileOut);
+		objOut.writeObject(data);
+	}finally{
+		if (objOut!=null){
+		objOut.close();
+	}
+	else if (fileOut!=null){
+		fileOut.close();
+	}
+	
+	public void LoadDataTable(){
+		ObjectInputStream objInputStream = null;
+		FileInputStream inputStream = null;
+		try{
+			inputStream = new FileInputStream(getClass().getResource("/dat/CustomCommand.dat").getPath());
+			objInputStream = new ObjectInputStream (inputStream);
+ 
+			DataTable data = (DataTable)objInputStream.readObject();
+			objInputStream.close();
+ 
+		} catch (FileNotFoundException e) {
+			DataTable.SetCustomCommand();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}finally{
+			if (objInputStream != null){
+				try{objInputStream.close();}catch (Exception e){}
+			}
+			else if (inputStream != null){
+				try{inputStream.close();}catch (Exception e){}
+			}
+		}
+	}
+
+	public void SaveDataTable(){
+		DataTable data = new DataTable();
+		data.setName ("CustomCommand");
+
+		String path = getClass().getResource("/dat/CustomCommand.dat").getPath();
+ 
+		ObjectOutputStream objOut = null;
+		FileOutputStream fileOut = null;
+		try{
+			fileOut = new FileOutputStream(path);
+			objOut = new ObjectOutputStream (fileOut);
+			objOut.writeObject(data);
+		}finally{
+			if (objOut!=null){
+				objOut.close();
+			}
+			else if (fileOut!=null){
+				fileOut.close();
+			}
+		}
+	}
+}
 
 public class DataTable {
+
 	private static ArrayList<String>[] BWTable;
 	private static ArrayList<String> namedList;
 	private static ArrayList<String> myList;
@@ -20,11 +299,11 @@ public class DataTable {
 	private static HashMap<String,String> customCommand;
 	
 	public DataTable() {
-		this.SetBWTable();
-		this.SetNamedList();
-		this.SetSafeURLList();
+		this.BWTable = new ArrayList<String>();
+		this.namedList = new ArrayList<String>();
+		this.safeURLList = new ArrayList<String>();
+		this.customCommand = new ArrayList<String>();
 		this.myList = new ArrayList<String>();
-		this.SetCustomCommand();
 	}
 	
 	public void SetCustomCommand()
@@ -55,6 +334,7 @@ public class DataTable {
 		{
 	        System.out.println(e);
 	    }
+	    customCommand.SaveDataTable();
 	}
 	
 	public String AddToCustomCommand(String command)
@@ -95,7 +375,7 @@ public class DataTable {
 				newCommand = null;
 			}
 		}
-		
+		customCommand.SaveDataTable();
 		return newCommand;
 	}
 	
@@ -169,7 +449,7 @@ public class DataTable {
 				ret = false;
 			}
 		}
-
+		BWTable.SaveDataTable();
 		return ret;
 	}
 	
@@ -199,6 +479,7 @@ public class DataTable {
 		{
 			ret = false;
 		}		
+		BWTable.SaveDataTable();
 		return ret;
 	}
 	
@@ -259,6 +540,7 @@ public class DataTable {
 				ret = false;
 			}
 		}
+		namedList.SaveDataTable();
 		return ret;
 	}
 
@@ -287,7 +569,8 @@ public class DataTable {
 		catch(IOException e)
 		{
 			ret = false;
-		}		
+		}
+		namedList.SaveDataTable();		
 		return ret;
 	}
 	public void SetSafeURLList()
@@ -381,6 +664,7 @@ public class DataTable {
 				ret = false;
 			}
 		}
+		safeURLList.SaveDataTable();
 		return ret;
 	}
 	
@@ -409,16 +693,17 @@ public class DataTable {
 		{
 			ret = false;
 		}	
+		safeURLList.SaveDataTable();
 		return ret;
 	}
 	
 	public ArrayList<String>[] getBWTable()
 	{
-		return this.BWTable;
+		return this.BWTable.getBWTable();
 	}
 	public ArrayList<String> getNamedList()
 	{
-		return this.namedList;
+		return this.namedList.getNamedList();
 	}
 	public ArrayList<String> getMyList()
 	{
@@ -426,14 +711,14 @@ public class DataTable {
 	}
 	public ArrayList<String> getSafeURLList()
 	{
-		return this.safeURLList;
+		return this.safeURLList.getSafeURLList();
 	}
 
 	public void Refresh()
 	{
-		this.SetBWTable();
-		this.SetCustomCommand();
-		this.SetNamedList();
-		this.SetSafeURLList();
+		BWTable.LoadDataTable();
+		customCommand.LoadDataTable();
+		namedList.LoadDataTable();
+		safeURLList.LoadDataTable();
 	}
 }
